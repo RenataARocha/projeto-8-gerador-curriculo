@@ -1,4 +1,5 @@
 import './index.css'
+import { DadosPessoaisForm } from "./components/Form/DadosPessoaisForm";
 
 function App() {
   return (
