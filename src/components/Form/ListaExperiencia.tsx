@@ -11,7 +11,7 @@ interface Experiencia {
 }
 
 interface ListaExperienciasProps {
-  onChange: (experiencias: Experiencia[]) => void; // para sincronizar com Preview
+  onChange: (experiencias: Experiencia[]) => void;
 }
 
 const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
@@ -38,30 +38,36 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
     onChange(novaLista);
   };
 
-  const updateExperiencia = (id: number, campo: keyof Experiencia, valor: any) => {
+  const updateExperiencia = (
+    id: number,
+    campo: keyof Experiencia,
+    valor: any
+  ) => {
     const novaLista = experiencias.map((exp) =>
-      exp.id === id ? { ...exp, [campo]: valor, ...(campo === "atual" && valor ? { fim: "" } : {}) } : exp
+      exp.id === id
+        ? {
+            ...exp,
+            [campo]: valor,
+            ...(campo === "atual" && valor ? { fim: "" } : {}),
+          }
+        : exp
     );
     setExperiencias(novaLista);
     onChange(novaLista);
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Experiências</h2>
+    <div>
+      <h2>Experiências</h2>
 
       {experiencias.map((exp) => (
-        <div
-          key={exp.id}
-          className="border rounded-2xl p-4 shadow-sm space-y-3 bg-white"
-        >
+        <div key={exp.id}>
           <input
             type="text"
             placeholder="Empresa"
             value={exp.empresa}
             onChange={(e) => updateExperiencia(exp.id, "empresa", e.target.value)}
             required
-            className="w-full border p-2 rounded"
           />
 
           <input
@@ -70,66 +76,60 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
             value={exp.cargo}
             onChange={(e) => updateExperiencia(exp.id, "cargo", e.target.value)}
             required
-            className="w-full border p-2 rounded"
           />
 
           <textarea
             placeholder="Descrição das atividades"
             value={exp.descricao}
             onChange={(e) => updateExperiencia(exp.id, "descricao", e.target.value)}
-            className="w-full border p-2 rounded"
           />
 
-          <div className="flex gap-2 items-center">
-            <label className="flex flex-col">
+          <div>
+            <label>
               Início:
               <input
                 type="month"
                 value={exp.inicio}
-                onChange={(e) => updateExperiencia(exp.id, "inicio", e.target.value)}
+                onChange={(e) =>
+                  updateExperiencia(exp.id, "inicio", e.target.value)
+                }
                 required
-                className="border p-2 rounded"
               />
             </label>
 
             {!exp.atual && (
-              <label className="flex flex-col">
+              <label>
                 Fim:
                 <input
                   type="month"
                   value={exp.fim}
-                  onChange={(e) => updateExperiencia(exp.id, "fim", e.target.value)}
+                  onChange={(e) =>
+                    updateExperiencia(exp.id, "fim", e.target.value)
+                  }
                   required
-                  className="border p-2 rounded"
                 />
               </label>
             )}
 
-            <label className="flex items-center gap-2">
+            <label>
               <input
                 type="checkbox"
                 checked={exp.atual}
-                onChange={(e) => updateExperiencia(exp.id, "atual", e.target.checked)}
+                onChange={(e) =>
+                  updateExperiencia(exp.id, "atual", e.target.checked)
+                }
               />
               Trabalho atual
             </label>
           </div>
 
-          <button
-            type="button"
-            onClick={() => removeExperiencia(exp.id)}
-            className="text-red-500 text-sm"
-          >
+          <button type="button" onClick={() => removeExperiencia(exp.id)}>
             Remover
           </button>
         </div>
       ))}
 
-      <button
-        type="button"
-        onClick={addExperiencia}
-        className="bg-blue-500 text-white px-4 py-2 rounded-2xl shadow"
-      >
+      <button type="button" onClick={addExperiencia}>
         + Adicionar experiência
       </button>
     </div>
