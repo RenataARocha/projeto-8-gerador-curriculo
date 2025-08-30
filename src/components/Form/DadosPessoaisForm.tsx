@@ -1,16 +1,14 @@
-import { useState } from "react";
 import styles from "./DadosPessoaisForm.module.css";
+import { type DadosPessoais } from "../types/types";
 
-export function DadosPessoaisForm() {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [linkedin, setLinkedin] = useState("");
-  const [resumo, setResumo] = useState("");
+type Props = {
+  dados: DadosPessoais;
+  setDados: React.Dispatch<React.SetStateAction<DadosPessoais>>;
+};
 
+export function DadosPessoaisForm({ dados, setDados }: Props) {
   const maxResumo = 200;
 
-  // Funções de validação simples
   const validarEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -20,8 +18,8 @@ export function DadosPessoaisForm() {
         Nome *
         <input
           type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
+          value={dados.nome}
+          onChange={(e) => setDados({ ...dados, nome: e.target.value })}
           required
         />
       </label>
@@ -30,12 +28,12 @@ export function DadosPessoaisForm() {
         Email *
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={!validarEmail(email) && email ? styles.erro : ""}
+          value={dados.email}
+          onChange={(e) => setDados({ ...dados, email: e.target.value })}
+          className={!validarEmail(dados.email) && dados.email ? styles.erro : ""}
           required
         />
-        {!validarEmail(email) && email && (
+        {!validarEmail(dados.email) && dados.email && (
           <span className={styles.msgErro}>Email inválido</span>
         )}
       </label>
@@ -44,8 +42,8 @@ export function DadosPessoaisForm() {
         Telefone *
         <input
           type="tel"
-          value={telefone}
-          onChange={(e) => setTelefone(e.target.value)}
+          value={dados.telefone}
+          onChange={(e) => setDados({ ...dados, telefone: e.target.value })}
           required
         />
       </label>
@@ -54,17 +52,17 @@ export function DadosPessoaisForm() {
         LinkedIn
         <input
           type="url"
-          value={linkedin}
-          onChange={(e) => setLinkedin(e.target.value)}
+          value={dados.linkedin}
+          onChange={(e) => setDados({ ...dados, linkedin: e.target.value })}
         />
       </label>
 
       <label>
-        Resumo ({resumo.length}/{maxResumo})
+        Resumo ({dados.resumo.length}/{maxResumo})
         <textarea
-          value={resumo}
+          value={dados.resumo}
           maxLength={maxResumo}
-          onChange={(e) => setResumo(e.target.value)}
+          onChange={(e) => setDados({ ...dados, resumo: e.target.value })}
         />
       </label>
     </form>
