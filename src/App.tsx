@@ -18,13 +18,10 @@ function App() {
   const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
 
   return (
-    <div className="app-container">
+    <>
       <Header />
-
       <div className="main-content">
         <div className="form-container">
-          <h1>Gerador de Currículo Inteligente</h1>
-          <p>Vamos começar a construir o projeto</p>
           <DadosPessoaisForm dados={dados} setDados={setDados} />
 
           {/* Botão e lista de experiências */}
@@ -35,8 +32,9 @@ function App() {
           <Preview dados={dados} experiencias={experiencias} />
         </div>
       </div>
-    </div>
+    </>
   );
 }
+
 
 export default App;

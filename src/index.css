@@ -6,19 +6,18 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%);
   color: #333;
-}
-
-.app-container {
-  padding: 20px;
 }
 
 /* Flex para form e preview */
 .main-content {
   display: flex;
   gap: 16px;
-  margin-top: 20px; /* Espaço entre header e conteúdo */
+  max-width: 1200px; /* Defina uma largura máxima para o contêiner principal */
+  margin: 0 auto; /* Centralize o conteúdo abaixo do header */
+  padding: 0 20px 20px; /* Adicione padding nas laterais e embaixo */
+  flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
 }
 
 .form-container {
@@ -26,8 +25,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 300px; /* Garante que o formulário não fique muito pequeno */
 }
 
 .preview-container {
   flex: 1;
+  min-width: 300px; /* Garante que o preview não fique muito pequeno */
 }

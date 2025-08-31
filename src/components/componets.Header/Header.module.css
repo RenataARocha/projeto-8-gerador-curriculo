@@ -6,12 +6,12 @@
   padding: 2rem 1rem;
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  max-width: 500px;
-  margin: 2rem auto;
+  max-width: 95%; /* Mantém a largura máxima do header */
+  margin: 2rem auto; /* Centraliza o header */
 }
 
 .header h1 {
-  font-family: 'Georgia', serif;
+  font-family: "Georgia", serif;
   font-size: 2rem;
   color: #ff4b9b;
   margin: 0;
@@ -22,7 +22,7 @@
 }
 
 .header p {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   color: #666;
   margin-top: 0.5rem;
   font-size: 1rem;
