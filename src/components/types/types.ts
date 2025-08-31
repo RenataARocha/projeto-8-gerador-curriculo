@@ -6,3 +6,14 @@ export interface DadosPessoais {
   linkedin: string;
   resumo: string;
 }
+
+export interface Experiencia {
+  id: number;
+  empresa: string;
+  cargo: string;
+  descricao: string;
+  inicio: string;
+  fim: string;
+  atual: boolean;
+}
+

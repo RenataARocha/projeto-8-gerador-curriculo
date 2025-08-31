@@ -2,8 +2,9 @@ import "./index.css";
 import { useState } from "react";
 import { DadosPessoaisForm } from "./components/components.Form/DadosPessoaisForm";
 import Preview from "./components/Preview/Preview";
-import type { DadosPessoais } from "./components/types/types";
-
+import ListaExperiencias from "./components/components.ListExperiencia/ListaExperiencia";
+import type { DadosPessoais, Experiencia } from "./components/types/types";
+import Header from "./components/componets.Header/Header";
 
 function App() {
   const [dados, setDados] = useState<DadosPessoais>({
@@ -14,16 +15,25 @@ function App() {
     resumo: "",
   });
 
-  return (
-    <div className="app-container" style={{ display: "flex", gap: "16px" }}>
-      <div style={{ flex: 1 }}>
-        <h1>Gerador de Currículo Inteligente</h1>
-        <p>Vamos começar a construir o projeto</p>
-        <DadosPessoaisForm dados={dados} setDados={setDados} />
-      </div>
+  const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
 
-      <div style={{ flex: 1 }}>
-        <Preview dados={dados} />
+  return (
+    <div className="app-container">
+      <Header />
+
+      <div className="main-content">
+        <div className="form-container">
+          <h1>Gerador de Currículo Inteligente</h1>
+          <p>Vamos começar a construir o projeto</p>
+          <DadosPessoaisForm dados={dados} setDados={setDados} />
+
+          {/* Botão e lista de experiências */}
+          <ListaExperiencias onChange={setExperiencias} />
+        </div>
+
+        <div className="preview-container">
+          <Preview dados={dados} experiencias={experiencias} />
+        </div>
       </div>
     </div>
   );
