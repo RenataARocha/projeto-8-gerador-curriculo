@@ -1,4 +1,5 @@
 import { type DadosPessoais } from "../types/types";
+import styles from "./Preview.module.css";
 
 type Props = {
   dados: DadosPessoais;
@@ -6,10 +7,10 @@ type Props = {
 
 export default function Preview({ dados }: Props) {
   return (
-    <>
+    <div className={styles.previewContainer} >
     <h2>Prévia do Currículo</h2>
-      <div className="border border-black mt-0 mr-4 p-8 min-h-[90vh]">
-        <h2 className="font-bold text-center">Dados Pessoais</h2>
+      <div className={styles.card}>
+        <h2>Dados Pessoais</h2>
         <p>
           <strong>Nome:</strong> {dados.nome}
         </p>
@@ -26,6 +27,6 @@ export default function Preview({ dados }: Props) {
           <strong>Resumo:</strong> {dados.resumo}
         </p>
       </div>
-    </>
+    </div>
   );
 }

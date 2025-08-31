@@ -38,23 +38,24 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
     onChange(novaLista);
   };
 
-  const updateExperiencia = (
-    id: number,
-    campo: keyof Experiencia,
-    valor: any
-  ) => {
-    const novaLista = experiencias.map((exp) =>
-      exp.id === id
-        ? {
-            ...exp,
-            [campo]: valor,
-            ...(campo === "atual" && valor ? { fim: "" } : {}),
-          }
-        : exp
-    );
-    setExperiencias(novaLista);
-    onChange(novaLista);
-  };
+const updateExperiencia = (
+  id: number,
+  campo: keyof Experiencia,
+  valor: Experiencia[keyof Experiencia] // Substitui o any
+) => {
+  const novaLista = experiencias.map((exp) =>
+    exp.id === id
+      ? {
+          ...exp,
+          [campo]: valor,
+          ...(campo === "atual" && valor ? { fim: "" } : {}),
+        }
+      : exp
+  );
+  setExperiencias(novaLista);
+  onChange(novaLista);
+};
+
 
   return (
     <div>
