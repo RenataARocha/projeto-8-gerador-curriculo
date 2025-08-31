@@ -14,14 +14,17 @@ function App() {
   });
 
   return (
-    <div className="app">
-      <h1>Gerador de Currículo Inteligente</h1>
-      <p>Vamos começar a construir o projeto</p>
+    <div className="grid grid-cols-3">
+      <div className="col-span-2">
+        <h1>Gerador de Currículo Inteligente</h1>
+        <p>Vamos começar a construir o projeto</p>
 
-      <DadosPessoaisForm dados={dados} setDados={setDados} />
-      <Preview dados={dados} />
+        <DadosPessoaisForm dados={dados} setDados={setDados} />
+      </div>
 
-      <h1 className="text-3xl font-bold text-red-500">Testando Tailwind</h1>
+      <div>
+        <Preview dados={dados} />
+      </div>
     </div>
   );
 }
