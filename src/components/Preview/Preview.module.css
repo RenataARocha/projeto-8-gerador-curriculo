@@ -1,0 +1,11 @@
+.previewContainer {
+  padding: 16px;
+}
+
+.card {
+  border: 1px solid #000;
+  padding: 16px;
+  border-radius: 8px;
+  min-height: 400px;
+  background-color: #fff;
+}

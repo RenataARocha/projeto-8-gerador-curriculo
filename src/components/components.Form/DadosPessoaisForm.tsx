@@ -1,5 +1,5 @@
+import type { DadosPessoais } from "../types/types";
 import styles from "./DadosPessoaisForm.module.css";
-import { type DadosPessoais } from "../types/types";
 
 type Props = {
   dados: DadosPessoais;
