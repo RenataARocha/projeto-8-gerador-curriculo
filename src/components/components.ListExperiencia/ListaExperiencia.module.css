@@ -1,0 +1,27 @@
+/* Lista de experiências */
+.lista-experiencias {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lista-experiencias input,
+.lista-experiencias textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.lista-experiencias button {
+  padding: 8px 12px;
+  background-color: #ff4b9b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.lista-experiencias button:hover {
+  background-color: #e03b87;
+}

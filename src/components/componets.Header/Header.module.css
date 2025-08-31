@@ -1,0 +1,35 @@
+
+/* Header */
+.header {
+  text-align: center;
+  background-color: #ffffff;
+  padding: 2rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.header h1 {
+  font-family: 'Georgia', serif;
+  font-size: 2rem;
+  color: #ff4b9b;
+  margin: 0;
+}
+
+.header h1 span {
+  font-size: 1.5rem;
+}
+
+.header p {
+  font-family: 'Arial', sans-serif;
+  color: #666;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.dots {
+  color: #ff4b9b;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
