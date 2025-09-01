@@ -1,21 +1,23 @@
+// src/components/Preview/Preview.tsx
 import type { DadosPessoais, Experiencia } from "../types/types";
-import type { Habilidade } from "../components.Habilidades/ListaHabilidades";
 import type { Educacao } from "../components.Educacao/ListaEducacao";
 import styles from "./Preview.module.css";
 
 type Props = {
   dados: DadosPessoais;
   experiencias?: Experiencia[];
-  habilidades?: Habilidade[];
   educacoes?: Educacao[];
 };
 
 export default function Preview({
   dados,
   experiencias = [],
-  habilidades = [],
   educacoes = [],
 }: Props) {
+  const habilidades = dados.habilidades
+    ? dados.habilidades.split(",").map((h) => h.trim()).filter(Boolean)
+    : [];
+
   return (
     <div className={styles.previewContainer}>
       <h2>Prévia do Currículo</h2>
@@ -48,8 +50,8 @@ export default function Preview({
       {habilidades.length > 0 && (
         <div className={styles.card}>
           <h3>Habilidades</h3>
-          {habilidades.map((h) => (
-            <p key={h.id}>{h.nome} ({h.nivel})</p>
+          {habilidades.map((h, index) => (
+            <p key={index}>{h}</p>
           ))}
         </div>
       )}

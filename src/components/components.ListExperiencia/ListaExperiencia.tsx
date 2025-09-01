@@ -120,6 +120,6 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
       </button>
     </div>
   );
-}; // Removido o ponto e vírgula e a sintaxe incorreta
+}; 
 
 export default ListaExperiencias;

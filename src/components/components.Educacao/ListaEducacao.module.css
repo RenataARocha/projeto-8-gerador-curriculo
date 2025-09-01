@@ -1,0 +1,101 @@
+.listaEducacaoContainer {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.formHeader h2 {
+  font-size: 18x;
+  font-weight: bold;
+  color: #333;
+}
+
+.dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
+  border-radius: 50%;
+}
+
+.educacoesList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.educacaoItem {
+  background: #fff0f5;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #f5b0d8;
+}
+
+.educacaoItem input,
+.educacaoItem textarea,
+.educacaoItem select {
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 13px;
+  padding: 8px;
+  border: 1px solid #f5b0d8;
+  border-radius: 8px;
+  outline: none;
+}
+
+.educacaoItem input:focus,
+.educacaoItem textarea:focus,
+.educacaoItem select:focus {
+  border-color: #ff6a95;
+}
+
+.dateFields {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkboxLabel {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+button {
+  background: #ff6a95;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #e05580;
+}
+
+.addButton {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 14px;
+}
