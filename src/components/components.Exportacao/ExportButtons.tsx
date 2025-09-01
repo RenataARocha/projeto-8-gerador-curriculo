@@ -1,4 +1,4 @@
-// src/components/components.Form/ExportButtons.tsx
+// src/components/components.Exportacao/ExportButtons.tsx
 import styles from "./ExportButtons.module.css";
 
 interface Props {
@@ -18,7 +18,7 @@ export default function ExportButtons({
 }: Props) {
   return (
     <div className={styles.exportContainer}>
-      <div className={styles.dividerLine}></div> 
+      <div className={styles.dividerLine}></div>
       <div className={styles.exportRow}>
         <button type="button" onClick={onExportPDF}>PDF</button>
         <button type="button" onClick={onExportWord}>Word</button>

@@ -38,7 +38,24 @@ export default function Preview({
           <span className={styles.contactSeparator}> | </span>
           {dados.telefone || "(00) 00000-0000"}
         </p>
+        
+        <div className={styles.contactLinks}>
+          {dados.linkedin && (
+            <a href={dados.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          )}
+          {dados.github && dados.linkedin && <span className={styles.contactSeparator}> | </span>}
+          {dados.github && (
+            <a href={dados.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+          )}
+        </div>
       </div>
+
+      {dados.resumo && (
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Resumo Profissional</h3>
+          <p>{dados.resumo}</p>
+        </div>
+      )}
 
       {experiencias.length > 0 && (
         <div className={styles.section}>
@@ -54,17 +71,6 @@ export default function Preview({
         </div>
       )}
 
-      {habilidades.length > 0 && (
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Habilidades</h3>
-          <div className={styles.habilidadesList}>
-            {habilidades.map((h, index) => (
-              <span key={index} className={styles.skillTag}>{h}</span>
-            ))}
-          </div>
-        </div>
-      )}
-
       {educacoes.length > 0 && (
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>Educação</h3>
@@ -75,6 +81,18 @@ export default function Preview({
               <p><strong>Período:</strong> {ed.inicio} - {ed.fim}</p>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* A seção de Habilidades foi movida para aqui, após Experiências e Educação. */}
+      {habilidades.length > 0 && (
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Habilidades</h3>
+          <div className={styles.habilidadesList}>
+            {habilidades.map((h, index) => (
+              <span key={index} className={styles.skillTag}>{h}</span>
+            ))}
+          </div>
         </div>
       )}
 
