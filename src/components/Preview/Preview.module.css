@@ -1,12 +1,39 @@
-/* Preview */
 .previewContainer {
-  padding: 16px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.previewContainer h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .card {
-  border: 1px solid #000;
-  padding: 16px;
+  background: #fff0f5;
+  border: 1px solid #f5b0d8;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.experienciaItem {
+  background: #ffffff;
+  border: 1px solid #f5b0d8;
   border-radius: 8px;
-  min-height: 400px;
-  background-color: #fff;
+  padding: 10px;
+  margin-top: 10px;
 }

@@ -1,10 +1,13 @@
 // src/types.ts
 export interface DadosPessoais {
   nome: string;
+  cargoDesejado: string;
   email: string;
   telefone: string;
   linkedin: string;
+  github: string;
   resumo: string;
+  habilidades: string;
 }
 
 export interface Experiencia {
@@ -16,4 +19,3 @@ export interface Experiencia {
   fim: string;
   atual: boolean;
 }
-

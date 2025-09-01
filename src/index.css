@@ -1,34 +1,39 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Layout principal */
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%);
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f9f9fb, #f1f3f9);
   color: #333;
 }
 
-/* Flex para form e preview */
 .main-content {
   display: flex;
-  gap: 16px;
-  max-width: 1200px; /* Defina uma largura máxima para o contêiner principal */
-  margin: 0 auto; /* Centralize o conteúdo abaixo do header */
-  padding: 0 20px 20px; /* Adicione padding nas laterais e embaixo */
-  flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* Área dos formulários */
 .form-container {
-  flex: 1;
+  width: 40%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  min-width: 300px; /* Garante que o formulário não fique muito pequeno */
+  gap: 20px;
 }
 
+/* Área da prévia */
 .preview-container {
   flex: 1;
-  min-width: 300px; /* Garante que o preview não fique muito pequeno */
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-height: 800px; /* Tamanho próximo de A4 */
+  max-height: 1000px;
+  overflow-y: auto;
 }
