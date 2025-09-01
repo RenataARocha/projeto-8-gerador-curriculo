@@ -38,10 +38,10 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
     const novaLista = experiencias.map((exp) =>
       exp.id === id
         ? {
-            ...exp,
-            [campo]: valor,
-            ...(campo === "atual" && valor ? { fim: "" } : {}),
-          }
+          ...exp,
+          [campo]: valor,
+          ...(campo === "atual" && valor ? { fim: "" } : {}),
+        }
         : exp
     );
     setExperiencias(novaLista);
@@ -50,16 +50,15 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
 
   return (
     <div className={styles.listaExperienciasContainer}>
-      <div className={styles.formHeader}>
-        <div className={styles.dots}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
       <div className={styles.experienciasList}>
-        {experiencias.map((exp) => (
+        {experiencias.map((exp, index) => (
           <div key={exp.id} className={styles.experienciaItem}>
+            <div className={styles.headerItem}>
+              <h3>Experiência {index + 1}</h3>
+              <button type="button" onClick={() => removeExperiencia(exp.id)} className={styles.removeButton}>
+                &times;
+              </button>
+            </div>
             <input
               type="text"
               placeholder="Empresa"
@@ -89,17 +88,17 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
                   required
                 />
               </label>
-              {!exp.atual && (
-                <label>
-                  Fim:
+              <label>
+                Fim:
+                {!exp.atual && (
                   <input
                     type="month"
                     value={exp.fim}
                     onChange={(e) => updateExperiencia(exp.id, "fim", e.target.value)}
                     required
                   />
-                </label>
-              )}
+                )}
+              </label>
               <label className={styles.checkboxLabel}>
                 <input
                   type="checkbox"
@@ -109,9 +108,6 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
                 Trabalho atual
               </label>
             </div>
-            <button type="button" onClick={() => removeExperiencia(exp.id)}>
-              Remover
-            </button>
           </div>
         ))}
       </div>
@@ -120,6 +116,6 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
       </button>
     </div>
   );
-}; 
+};
 
 export default ListaExperiencias;

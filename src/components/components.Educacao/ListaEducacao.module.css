@@ -1,22 +1,19 @@
+/* CONTAINER PRINCIPAL */
 .listaEducacaoContainer {
   background: white;
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* CABEÇALHO (com os 3 pontos)*/
 .formHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-}
-
-.formHeader h2 {
-  font-size: 18x;
-  font-weight: bold;
-  color: #333;
 }
 
 .dots {
@@ -31,29 +28,45 @@
   border-radius: 50%;
 }
 
+/* LISTA DE EDUCAÇÕES */
 .educacoesList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* ITEM DE EDUCAÇÃO */
 .educacaoItem {
-  background: #fff0f5;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 10px;
-  padding: 10px;
-  border: 1px solid #f5b0d8;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
+/*  CAMPOS DE TEXTO */
 .educacaoItem input,
 .educacaoItem textarea,
 .educacaoItem select {
   width: 100%;
-  margin-bottom: 8px;
-  font-size: 13px;
-  padding: 8px;
-  border: 1px solid #f5b0d8;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 8px;
   outline: none;
+  box-sizing: border-box;
+}
+
+.educacaoItem input::placeholder,
+.educacaoItem textarea::placeholder {
+  color: #888;
 }
 
 .educacaoItem input:focus,
@@ -62,40 +75,73 @@
   border-color: #ff6a95;
 }
 
-.dateFields {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
+/*BOTÃO DE REMOVER EDUCAÇÃO */
+.educacaoItem button {
+  background: transparent;
+  color: #ff6a95;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  align-self: flex-end;
 }
 
-.checkboxLabel {
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.educacaoItem button:hover {
+  text-decoration: underline;
 }
 
-button {
+/* BOTÃO ADICIONAR EDUCAÇÃO */
+.addButton {
   background: #ff6a95;
   color: white;
   border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button:hover {
-  background: #e05580;
-}
-
-.addButton {
-  width: 100%;
-  margin-top: 10px;
   padding: 10px;
   border-radius: 15px;
   font-weight: bold;
   font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.addButton:hover {
+  background: #e05580;
+}
+
+/* Cabeçalho do item - igual ao de experiência */
+.headerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.headerItem h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Botão de remover no topo com X */
+.removeButton {
+  background: transparent;
+  border: none;
+  color: #ff6a95;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  color: #e05580;
+}
+
+/* Ajustando o tamanho dos labels de Início e Fim */
+.dateFields label {
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
 }

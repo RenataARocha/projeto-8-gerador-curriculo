@@ -48,8 +48,19 @@ export default function ListaEducacao({ onChange }: Props) {
         </div>
       </div>
 
-      {educacoes.map((e) => (
+      {educacoes.map((e, index) => (
         <div key={e.id} className={styles.educacaoItem}>
+          <div className={styles.headerItem}>
+            <h3>Educação {index + 1}</h3>
+            <button
+              type="button"
+              onClick={() => removeEducacao(e.id)}
+              className={styles.removeButton}
+            >
+              &times;
+            </button>
+          </div>
+
           <input
             type="text"
             placeholder="Instituição"
@@ -62,23 +73,27 @@ export default function ListaEducacao({ onChange }: Props) {
             value={e.curso}
             onChange={(ev) => updateEducacao(e.id, "curso", ev.target.value)}
           />
-          <input
-            type="month"
-            placeholder="Início"
-            value={e.inicio}
-            onChange={(ev) => updateEducacao(e.id, "inicio", ev.target.value)}
-          />
-          <input
-            type="month"
-            placeholder="Fim"
-            value={e.fim}
-            onChange={(ev) => updateEducacao(e.id, "fim", ev.target.value)}
-          />
-          <button type="button" onClick={() => removeEducacao(e.id)}>
-            Remover
-          </button>
+          <div className={styles.dateFields}>
+            <label>
+              Início:
+              <input
+                type="month"
+                value={e.inicio}
+                onChange={(ev) => updateEducacao(e.id, "inicio", ev.target.value)}
+              />
+            </label>
+            <label>
+              Fim:
+              <input
+                type="month"
+                value={e.fim}
+                onChange={(ev) => updateEducacao(e.id, "fim", ev.target.value)}
+              />
+            </label>
+          </div>
         </div>
       ))}
+
 
       <button type="button" className={styles.addButton} onClick={addEducacao}>
         + Adicionar Educação
