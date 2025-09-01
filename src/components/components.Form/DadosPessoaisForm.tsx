@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { DadosPessoais } from "../types/types";
 import styles from "./DadosPessoaisForm.module.css";
 
@@ -8,6 +9,11 @@ type Props = {
 
 export function DadosPessoaisForm({ dados, setDados }: Props) {
   const maxResumo = 200;
+  const [touched, setTouched] = useState({
+    nome: false,
+    email: false,
+    telefone: false,
+  });
 
   const validarEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -20,8 +26,12 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
           type="text"
           value={dados.nome}
           onChange={(e) => setDados({ ...dados, nome: e.target.value })}
+          onBlur={() => setTouched((s) => ({ ...s, nome: true }))}
           required
         />
+        {touched.nome && !dados.nome && (
+          <span className={styles.msgErro}>Nome é obrigatório</span>
+        )}
       </label>
 
       <label>
@@ -30,10 +40,18 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
           type="email"
           value={dados.email}
           onChange={(e) => setDados({ ...dados, email: e.target.value })}
-          className={!validarEmail(dados.email) && dados.email ? styles.erro : ""}
+          onBlur={() => setTouched((s) => ({ ...s, email: true }))}
+          className={
+            touched.email && (!dados.email || !validarEmail(dados.email))
+              ? styles.erro
+              : ""
+          }
           required
         />
-        {!validarEmail(dados.email) && dados.email && (
+        {touched.email && !dados.email && (
+          <span className={styles.msgErro}>Email é obrigatório</span>
+        )}
+        {touched.email && dados.email && !validarEmail(dados.email) && (
           <span className={styles.msgErro}>Email inválido</span>
         )}
       </label>
@@ -44,8 +62,12 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
           type="tel"
           value={dados.telefone}
           onChange={(e) => setDados({ ...dados, telefone: e.target.value })}
+          onBlur={() => setTouched((s) => ({ ...s, telefone: true }))}
           required
         />
+        {touched.telefone && !dados.telefone && (
+          <span className={styles.msgErro}>Telefone é obrigatório</span>
+        )}
       </label>
 
       <label>
