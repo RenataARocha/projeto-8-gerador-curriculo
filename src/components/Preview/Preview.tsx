@@ -15,7 +15,7 @@ export default function Preview({ dados, experiencias = [] }: Props) {
       <div className={styles.card}>
         <h2>Dados Pessoais</h2>
         <p><strong>Nome:</strong> {dados.nome}</p>
-        <p><strong>Cargo Desejado:</strong> {dados.cargo}</p>
+        <p><strong>Cargo Desejado:</strong> {dados.cargoDesejado}</p>
         <p><strong>Email:</strong> {dados.email}</p>
         <p><strong>Telefone:</strong> {dados.telefone}</p>
         <p><strong>LinkedIn:</strong> {dados.linkedin}</p>
