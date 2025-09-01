@@ -1,4 +1,5 @@
-// src/components/Preview/Preview.tsx
+
+import type { Habilidade } from "../../App"; 
 import type { DadosPessoais, Experiencia } from "../types/types";
 import type { Educacao } from "../components.Educacao/ListaEducacao";
 import styles from "./Preview.module.css";
@@ -7,16 +8,16 @@ type Props = {
   dados: DadosPessoais;
   experiencias?: Experiencia[];
   educacoes?: Educacao[];
+  listaDeHabilidades?: Habilidade[];
 };
 
 export default function Preview({
   dados,
   experiencias = [],
   educacoes = [],
+  listaDeHabilidades = [],
 }: Props) {
-  const habilidades = dados.habilidades
-    ? dados.habilidades.split(",").map((h) => h.trim()).filter(Boolean)
-    : [];
+
 
   return (
     <div className={styles.previewContainer}>
@@ -47,11 +48,14 @@ export default function Preview({
         </div>
       )}
 
-      {habilidades.length > 0 && (
+      {/* ALTERADO: Este bloco agora usa a 'listaDeHabilidades' para mostrar nome e nível */}
+      {listaDeHabilidades.length > 0 && (
         <div className={styles.card}>
           <h3>Habilidades</h3>
-          {habilidades.map((h, index) => (
-            <p key={index}>{h}</p>
+          {listaDeHabilidades.map((habilidade) => (
+            <p key={habilidade.id}>
+              {habilidade.nome} ({habilidade.nivel})
+            </p>
           ))}
         </div>
       )}
