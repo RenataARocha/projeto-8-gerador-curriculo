@@ -8,14 +8,13 @@ type Props = {
 };
 
 export function DadosPessoaisForm({ dados, setDados }: Props) {
-  const maxResumo = 200;
+  const maxResumo = 1000;
+
   const [touched, setTouched] = useState({
     nome: false,
     email: false,
     telefone: false,
   });
-
-  const maxResumo = 1000;
 
   const validarEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -48,21 +47,23 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         )}
       </label>
 
-      {/* Email */}
+      {/* Cargo Desejado */}
       <label
-        className={`${styles.floatingLabel} ${dados.email ? styles.active : ""}`}
-        data-placeholder="Email *"
-      <label
-        className={`${styles.floatingLabel} ${dados.cargoDesejado ? styles.active : ""}`}
+        className={`${styles.floatingLabel} ${
+          dados.cargoDesejado ? styles.active : ""
+        }`}
         data-placeholder="Cargo Desejado"
       >
         <input
           type="text"
           value={dados.cargoDesejado || ""}
-          onChange={(e) => setDados({ ...dados, cargoDesejado: e.target.value })}
+          onChange={(e) =>
+            setDados({ ...dados, cargoDesejado: e.target.value })
+          }
         />
       </label>
 
+      {/* Email */}
       <label
         className={`${styles.floatingLabel} ${dados.email ? styles.active : ""}`}
         data-placeholder="E-mail"
@@ -87,10 +88,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         )}
       </label>
 
-
       {/* Telefone */}
-
-
       <label
         className={`${styles.floatingLabel} ${dados.telefone ? styles.active : ""}`}
         data-placeholder="Telefone"
@@ -107,10 +105,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         )}
       </label>
 
-
       {/* LinkedIn */}
-
-
       <label
         className={`${styles.floatingLabel} ${dados.linkedin ? styles.active : ""}`}
         data-placeholder="LinkedIn (opcional)"
@@ -122,10 +117,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         />
       </label>
 
-
       {/* GitHub */}
-
-
       <label
         className={`${styles.floatingLabel} ${dados.github ? styles.active : ""}`}
         data-placeholder="GitHub (opcional)"
@@ -137,12 +129,11 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         />
       </label>
 
-
       {/* Resumo */}
-
-
       <label
-        className={`${styles.floatingLabel} ${dados.resumo ? styles.active : ""} ${styles.resumoField}`}
+        className={`${styles.floatingLabel} ${dados.resumo ? styles.active : ""} ${
+          styles.resumoField
+        }`}
         data-placeholder={`Resumo Profissional (${dados.resumo.length}/${maxResumo})`}
       >
         <textarea
@@ -152,11 +143,11 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         />
       </label>
 
-
       {/* Habilidades */}
-
       <label
-        className={`${styles.floatingLabel} ${dados.habilidades ? styles.active : ""} ${styles.habilidadesField}`}
+        className={`${styles.floatingLabel} ${dados.habilidades ? styles.active : ""} ${
+          styles.habilidadesField
+        }`}
         data-placeholder="Habilidades (separadas por vírgula)"
       >
         <input
