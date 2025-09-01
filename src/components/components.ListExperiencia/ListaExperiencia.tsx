@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-
-interface Experiencia {
-  id: number;
-  empresa: string;
-  cargo: string;
-  descricao: string;
-  inicio: string;
-  fim: string;
-  atual: boolean;
-}
+import styles from "../components.ListExperiencia/ListaExperiencia.module.css";
+import type { Experiencia } from "../types/types";
 
 interface ListaExperienciasProps {
   onChange: (experiencias: Experiencia[]) => void;
@@ -38,103 +30,96 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
     onChange(novaLista);
   };
 
-const updateExperiencia = (
-  id: number,
-  campo: keyof Experiencia,
-  valor: Experiencia[keyof Experiencia] // Substitui o any
-) => {
-  const novaLista = experiencias.map((exp) =>
-    exp.id === id
-      ? {
-          ...exp,
-          [campo]: valor,
-          ...(campo === "atual" && valor ? { fim: "" } : {}),
-        }
-      : exp
-  );
-  setExperiencias(novaLista);
-  onChange(novaLista);
-};
-
+  const updateExperiencia = (
+    id: number,
+    campo: keyof Experiencia,
+    valor: Experiencia[keyof Experiencia]
+  ) => {
+    const novaLista = experiencias.map((exp) =>
+      exp.id === id
+        ? {
+            ...exp,
+            [campo]: valor,
+            ...(campo === "atual" && valor ? { fim: "" } : {}),
+          }
+        : exp
+    );
+    setExperiencias(novaLista);
+    onChange(novaLista);
+  };
 
   return (
-    <div>
-      <h2>Experiências</h2>
-
-      {experiencias.map((exp) => (
-        <div key={exp.id}>
-          <input
-            type="text"
-            placeholder="Empresa"
-            value={exp.empresa}
-            onChange={(e) => updateExperiencia(exp.id, "empresa", e.target.value)}
-            required
-          />
-
-          <input
-            type="text"
-            placeholder="Cargo"
-            value={exp.cargo}
-            onChange={(e) => updateExperiencia(exp.id, "cargo", e.target.value)}
-            required
-          />
-
-          <textarea
-            placeholder="Descrição das atividades"
-            value={exp.descricao}
-            onChange={(e) => updateExperiencia(exp.id, "descricao", e.target.value)}
-          />
-
-          <div>
-            <label>
-              Início:
-              <input
-                type="month"
-                value={exp.inicio}
-                onChange={(e) =>
-                  updateExperiencia(exp.id, "inicio", e.target.value)
-                }
-                required
-              />
-            </label>
-
-            {!exp.atual && (
+    <div className={styles.listaExperienciasContainer}>
+      <div className={styles.formHeader}>
+        <div className={styles.dots}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div className={styles.experienciasList}>
+        {experiencias.map((exp) => (
+          <div key={exp.id} className={styles.experienciaItem}>
+            <input
+              type="text"
+              placeholder="Empresa"
+              value={exp.empresa}
+              onChange={(e) => updateExperiencia(exp.id, "empresa", e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Cargo"
+              value={exp.cargo}
+              onChange={(e) => updateExperiencia(exp.id, "cargo", e.target.value)}
+              required
+            />
+            <textarea
+              placeholder="Descrição das atividades"
+              value={exp.descricao}
+              onChange={(e) => updateExperiencia(exp.id, "descricao", e.target.value)}
+            />
+            <div className={styles.dateFields}>
               <label>
-                Fim:
+                Início:
                 <input
                   type="month"
-                  value={exp.fim}
-                  onChange={(e) =>
-                    updateExperiencia(exp.id, "fim", e.target.value)
-                  }
+                  value={exp.inicio}
+                  onChange={(e) => updateExperiencia(exp.id, "inicio", e.target.value)}
                   required
                 />
               </label>
-            )}
-
-            <label>
-              <input
-                type="checkbox"
-                checked={exp.atual}
-                onChange={(e) =>
-                  updateExperiencia(exp.id, "atual", e.target.checked)
-                }
-              />
-              Trabalho atual
-            </label>
+              {!exp.atual && (
+                <label>
+                  Fim:
+                  <input
+                    type="month"
+                    value={exp.fim}
+                    onChange={(e) => updateExperiencia(exp.id, "fim", e.target.value)}
+                    required
+                  />
+                </label>
+              )}
+              <label className={styles.checkboxLabel}>
+                <input
+                  type="checkbox"
+                  checked={exp.atual}
+                  onChange={(e) => updateExperiencia(exp.id, "atual", e.target.checked)}
+                />
+                Trabalho atual
+              </label>
+            </div>
+            <button type="button" onClick={() => removeExperiencia(exp.id)}>
+              Remover
+            </button>
           </div>
-
-          <button type="button" onClick={() => removeExperiencia(exp.id)}>
-            Remover
-          </button>
-        </div>
-      ))}
-
-      <button type="button" onClick={addExperiencia}>
+        ))}
+      </div>
+      <button type="button" onClick={addExperiencia} className={styles.addButton}>
         + Adicionar experiência
       </button>
     </div>
   );
-};
+}; // Removido o ponto e vírgula e a sintaxe incorreta
 
 export default ListaExperiencias;

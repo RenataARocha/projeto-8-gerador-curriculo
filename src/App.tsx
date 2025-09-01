@@ -9,25 +9,37 @@ import Header from "./components/componets.Header/Header";
 function App() {
   const [dados, setDados] = useState<DadosPessoais>({
     nome: "",
+    cargoDesejado: "",
     email: "",
     telefone: "",
     linkedin: "",
+    github: "",
     resumo: "",
+    habilidades: "",
   });
 
   const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Dados pessoais:", dados);
+    console.log("Experiências:", experiencias);
+    alert("Currículo gerado com sucesso!");
+  };
 
   return (
     <>
       <Header />
       <div className="main-content">
-        <div className="form-container">
+        <form className="form-container" onSubmit={handleSubmit}>
+          {/* Dados pessoais */}
           <DadosPessoaisForm dados={dados} setDados={setDados} />
 
-          {/* Botão e lista de experiências */}
+          {/* Experiências */}
           <ListaExperiencias onChange={setExperiencias} />
-        </div>
+        </form>
 
+        {/* Pré-visualização */}
         <div className="preview-container">
           <Preview dados={dados} experiencias={experiencias} />
         </div>
@@ -35,6 +47,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;
