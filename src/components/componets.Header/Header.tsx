@@ -5,10 +5,14 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <h1>
-        Seu Currículo <b>Interactive</b> <span>🌙</span>
+        Seu Currículo <span className={styles.highlight}>Interactive</span> <span>🌙</span>
       </h1>
-      <p>Crie seu currículo perfeito com elegância e simplicidade</p>
-      <div className={styles.dots}>•••</div>
+      <p>Mostre quem você é, não só o que você fez.</p>
+      <div className={styles.dots}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </header>
   );
 };

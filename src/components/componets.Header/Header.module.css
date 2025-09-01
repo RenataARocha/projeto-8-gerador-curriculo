@@ -1,27 +1,43 @@
 .header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   padding: 20px 0;
-  background: linear-gradient(90deg, #ff6a95, #9b59b6);
-  color: white;
-  border-bottom: 4px solid #f5b0d8;
+  background: #ffffffd9;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 95%;
+  margin: 0 auto; /* Centraliza horizontalmente */
 }
 
 .header h1 {
   font-size: 24px;
   font-weight: bold;
+  color: #555; /* Cinza neutro pro título base */
 }
 
-.header h1 b {
+.highlight {
+  color: #ff6a95; /* Pink chamativo para destaque */
   font-weight: 900;
 }
 
 .header p {
   font-size: 14px;
   margin-top: 5px;
+  color: #666; /* Cinza pro subtítulo */
 }
 
 .dots {
-  margin-top: 10px;
-  font-size: 20px;
-  color: #fff;
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
+  border-radius: 50%;
 }
