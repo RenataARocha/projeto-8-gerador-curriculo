@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../components.ListExperiencia/ListaExperiencia.module.css";
+import styles from "./ListaExperiencia.module.css";
 import type { Experiencia } from "../types/types";
 
 interface ListaExperienciasProps {

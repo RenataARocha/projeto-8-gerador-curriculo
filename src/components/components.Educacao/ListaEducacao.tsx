@@ -1,6 +1,6 @@
 // src/components/components.Educacao/ListaEducacao.tsx
 import { useState } from "react";
-import styles from "../components.Educacao/ListaEducacao.module.css";
+import styles from "./ListaEducacao.module.css";
 
 export type Educacao = {
   id: number;

@@ -9,7 +9,7 @@ import type { DadosPessoais, Experiencia } from "./components/types/types";
 import type { Educacao } from "./components/components.Educacao/ListaEducacao";
 import ExportButtons from "./components/components.Exportacao/ExportButtons";
 
-import Header from "./components/componets.Header/Header";
+import Header from "./components/components.Header/Header";
 
 function App() {
   const [dados, setDados] = useState<DadosPessoais>({
