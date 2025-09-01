@@ -1,6 +1,5 @@
-// src/components/components.ListHabilidades/ListaHabilidades.tsx
 import { useState } from "react";
-import styles from "../components.Habilidades/ListaHabilidades.module.css";
+import styles from "./ListaHabilidades.module.css";
 
 export type Habilidade = {
   id: number;
@@ -28,13 +27,17 @@ export default function ListaHabilidades({ onChange }: Props) {
     onChange(novaLista);
   };
 
-  const updateHabilidade = (id: number, campo: keyof Habilidade, valor: any) => {
-    const novaLista = habilidades.map((h) =>
-      h.id === id ? { ...h, [campo]: valor } : h
-    );
-    setHabilidades(novaLista);
-    onChange(novaLista);
-  };
+  const updateHabilidade = (
+  id: number,
+  campo: keyof Habilidade,
+  valor: Habilidade[keyof Habilidade]
+) => {
+  const novaLista = habilidades.map((h) =>
+    h.id === id ? { ...h, [campo]: valor } : h
+  );
+  setHabilidades(novaLista);
+  onChange(novaLista);
+};
 
   return (
     <div className={styles.container}>
