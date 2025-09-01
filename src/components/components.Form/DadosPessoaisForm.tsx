@@ -29,6 +29,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         </div>
       </div>
 
+      {/* Nome */}
       <label
         className={`${styles.floatingLabel} ${dados.nome ? styles.active : ""}`}
         data-placeholder="Nome Completo"
@@ -45,8 +46,11 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         )}
       </label>
 
-      <label>
-        Email *
+      {/* Email */}
+      <label
+        className={`${styles.floatingLabel} ${dados.email ? styles.active : ""}`}
+        data-placeholder="Email *"
+      >
         <input
           type="email"
           value={dados.email}
@@ -67,6 +71,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         )}
       </label>
 
+      {/* Telefone */}
       <label
         className={`${styles.floatingLabel} ${dados.telefone ? styles.active : ""}`}
         data-placeholder="Telefone"
@@ -83,6 +88,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         )}
       </label>
 
+      {/* LinkedIn */}
       <label
         className={`${styles.floatingLabel} ${dados.linkedin ? styles.active : ""}`}
         data-placeholder="LinkedIn (opcional)"
@@ -94,6 +100,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         />
       </label>
 
+      {/* GitHub */}
       <label
         className={`${styles.floatingLabel} ${dados.github ? styles.active : ""}`}
         data-placeholder="GitHub (opcional)"
@@ -105,6 +112,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         />
       </label>
 
+      {/* Resumo */}
       <label
         className={`${styles.floatingLabel} ${dados.resumo ? styles.active : ""} ${styles.resumoField}`}
         data-placeholder={`Resumo Profissional (${dados.resumo.length}/${maxResumo})`}
@@ -116,6 +124,7 @@ export function DadosPessoaisForm({ dados, setDados }: Props) {
         />
       </label>
 
+      {/* Habilidades */}
       <label
         className={`${styles.floatingLabel} ${dados.habilidades ? styles.active : ""} ${styles.habilidadesField}`}
         data-placeholder="Habilidades (separadas por vírgula)"
