@@ -7,6 +7,8 @@ import ListaEducacao from "./components/components.Educacao/ListaEducacao";
 
 import type { DadosPessoais, Experiencia } from "./components/types/types";
 import type { Educacao } from "./components/components.Educacao/ListaEducacao";
+import ExportButtons from "./components/components.Exportacao/ExportButtons";
+
 import Header from "./components/componets.Header/Header";
 
 function App() {
@@ -37,6 +39,15 @@ function App() {
 
           {/* Educação */}
           <ListaEducacao onChange={setEducacoes} />
+
+          {/* Botões de exportação e limpar */}
+          <ExportButtons
+            onExportPDF={() => console.log("Export PDF")}
+            onExportWord={() => console.log("Export Word")}
+            onExportTXT={() => console.log("Export TXT")}
+            onExportJSON={() => console.log("Export JSON")}
+            onClearAll={() => console.log("Limpar tudo")}
+          />
         </form>
 
         {/* Pré-visualização */}
