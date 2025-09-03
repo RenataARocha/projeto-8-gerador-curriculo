@@ -38,7 +38,7 @@ export default function Preview({
           <span className={styles.contactSeparator}> | </span>
           {dados.telefone || "(00) 00000-0000"}
         </p>
-        
+
         <div className={styles.contactLinks}>
           {dados.linkedin && (
             <a href={dados.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -53,13 +53,16 @@ export default function Preview({
       {dados.resumo && (
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>Resumo Profissional</h3>
-          <p>{dados.resumo}</p>
+          <ul className={styles.list}>
+            {dados.resumo.split("\n").map((linha, index) => (
+              <li key={index}>{linha.trim()}</li>
+            ))}
+          </ul>
         </div>
       )}
-
       {experiencias.length > 0 && (
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Experiências</h3>
+          <h3 className={styles.sectionTitle1}>Experiências</h3>
           {experiencias.map((exp) => (
             <div key={exp.id} className={styles.item}>
               <p><strong>Empresa:</strong> {exp.empresa}</p>
@@ -73,7 +76,7 @@ export default function Preview({
 
       {educacoes.length > 0 && (
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Educação</h3>
+          <h3 className={styles.sectionTitle1}>Educação</h3>
           {educacoes.map((ed) => (
             <div key={ed.id} className={styles.item}>
               <p><strong>Curso:</strong> {ed.curso}</p>
@@ -87,7 +90,7 @@ export default function Preview({
       {/* A seção de Habilidades foi movida para aqui, após Experiências e Educação. */}
       {habilidades.length > 0 && (
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Habilidades</h3>
+          <h3 className={styles.sectionTitle1}>Habilidades</h3>
           <div className={styles.habilidadesList}>
             {habilidades.map((h, index) => (
               <span key={index} className={styles.skillTag}>{h}</span>

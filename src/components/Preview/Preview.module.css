@@ -1,7 +1,7 @@
 /* src/components/Preview/Preview.module.css */
 
 .previewContainer {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #333;
   overflow: hidden;
   padding: 0;
@@ -41,56 +41,185 @@
 }
 
 .personalInfo h1 {
-  font-size: 32px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 600;
   margin: 0;
-  color: #222;
+  color: #080808;
 }
 
 .jobTitle {
-  font-size: 18px;
+  font-size: 12px;
   font-style: italic;
   color: #666;
   margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .contactInfo {
-  font-size: 14px;
+  font-size: 12px;
   color: #888;
-  margin: 0;
+  margin-bottom: 3px;
 }
 
+.contactLinks {
+  font-size: 12px;
+}
 .contactSeparator {
   color: #ddd;
   font-weight: normal;
 }
 
 .section {
-  margin: 20px 50px;
+  margin: 10px 50px;
 }
 
 .sectionTitle {
-  font-size: 24px;
-  font-weight: 400;
-  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 600;
   padding-bottom: 5px;
-  border-bottom: 1px solid #eee;
+  color: #080808;
 }
+
+.sectionTitle, p {
+  font-size: 12px;
+}
+
+.sectionTitle1{
+  font-size: 14px;
+  font-weight: 600;
+  color: #080808;
+}
+
 
 .item {
   margin-bottom: 15px;
-  padding-left: 10px;
+  padding-left: 5px;
+  line-height: 10px;
 }
 
+/* Alterações para o campo de habilidades */
 .habilidadesList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: block;
 }
 
 .skillTag {
-  color: #555;
+  color: #444444;
   font-size: 12px;
-  padding: 4px 4px;
+  font-weight: 600;
+  padding: 0;
+  display: inline;
+}
+
+.skillTag:not(:last-child)::after {
+  content: " | ";
+}
+
+/* ========================================= */
+/* ESTILOS DE IMPRESSÃO - PARA O PDF FINAL */
+/* ========================================= */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .previewContainer {
+    font-family: Arial, Helvetica, sans-serif; /* Fonte clássica para documentos */
+    padding: 1cm; /* Margens de 1cm em cada lado */
+    width: 21cm; /* Largura de uma folha A4 */
+    min-height: 29.7cm; /* Altura de uma folha A4 */
+    box-shadow: none;
+    background-color: white;
+    margin: 0 auto;
+  }
+
+  /* Oculta elementos que não devem aparecer no PDF */
+  .header,
+  .main-content,
+  .form-container {
+    display: none !important;
+  }
+
+  /* Faz com que apenas o preview seja impresso */
+  .preview-container {
+    display: block !important;
+    position: relative;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    box-shadow: none;
+    border: none;
+  }
+
+  /* Ajusta as fontes e espaçamentos para o documento final */
+  .personalInfo {
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .personalInfo h1 {
+    font-size: 18pt;
+    font-weight: bold;
+    color: black;
+  }
+
+  .jobTitle {
+    font-size: 14pt;
+    color: black;
+    font-style: normal;
+    margin-bottom: 10pt;
+  }
+  
+  .contactInfo,
+  .contactLinks a {
+    font-size: 10pt;
+    color: #444;
+  }
+
+  .section {
+    margin: 15pt 0;
+  }
+
+  .sectionTitle {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 5pt;
+    border-bottom: 1px solid #000;
+  }
+
+  .item {
+    margin-bottom: 10pt;
+    padding-left: 0;
+    border-left: none;
+  }
+  
+  .item p {
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  .habilidadesList {
+    margin-top: 5pt;
+  }
+
+  .skillTag {
+    font-size: 10pt;
+    color: #444;
+  }
+}
+
+.list {
+  padding-left: 20px;
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.list li {
+  margin-bottom: 5px;
+  line-height: 1.4;
 }
