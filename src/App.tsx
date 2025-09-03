@@ -1,3 +1,7 @@
+import { useState, useEffect } from "react"; 
+
+import "./index.css";
+
 // src/App.tsx
 import "./index.css";
 import { useState, useRef } from "react";
@@ -14,6 +18,14 @@ import Header from "./components/components.Header/Header";
 // Não precisamos mais do jsPDF para essa abordagem
 // import jsPDF from "jspdf";
 
+import ListaHabilidades from "./components/ListaHabilidades";
+
+export interface Habilidade {
+  id: number;
+  nome: string;
+  nivel: string;
+}
+
 function App() {
   const [dados, setDados] = useState<DadosPessoais>({
     nome: "",
@@ -23,11 +35,33 @@ function App() {
     linkedin: "",
     github: "",
     resumo: "",
-    habilidades: "",
+    habilidades: "", 
   });
 
   const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
   const [educacoes, setEducacoes] = useState<Educacao[]>([]);
+
+  const [listaDeHabilidades, setListaDeHabilidades] = useState<Habilidade[]>([]);
+
+
+  const adicionarHabilidade = (nome: string, nivel: string) => {
+    const novaHabilidade: Habilidade = { id: Date.now(), nome, nivel };
+    setListaDeHabilidades(listaAnterior => [...listaAnterior, novaHabilidade]);
+  };
+
+  const removerHabilidade = (id: number) => {
+    setListaDeHabilidades(listaAnterior => listaAnterior.filter((h) => h.id !== id));
+  };
+
+
+  useEffect(() => {
+    const stringHabilidades = listaDeHabilidades
+      .map(h => `${h.nome} (${h.nivel})`)
+      .join(', ');
+    
+    setDados(dadosAtuais => ({ ...dadosAtuais, habilidades: stringHabilidades }));
+  }, [listaDeHabilidades]); 
+
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -158,6 +192,19 @@ ${educacoesHtml}
           <DadosPessoaisForm dados={dados} setDados={setDados} />
           <ListaExperiencias onChange={setExperiencias} />
           <ListaEducacao onChange={setEducacoes} />
+          <ListaHabilidades
+            habilidades={listaDeHabilidades}
+            adicionarHabilidade={adicionarHabilidade}
+            removerHabilidade={removerHabilidade}
+          />
+        </form>
+        <div className="preview-container">
+          <Preview
+            dados={dados}
+            experiencias={experiencias}
+            educacoes={educacoes}
+            listaDeHabilidades={listaDeHabilidades} 
+
 
           <ExportButtons
             onExportPDF={handleExportPDF}
