@@ -5,7 +5,7 @@ import "./index.css";
 // src/App.tsx
 import "./index.css";
 import { useState, useRef } from "react";
-import { DadosPessoaisForm } from "./components/components.Form/DadosPessoaisForm";
+import DadosPessoaisForm from "./components/components.Form/DadosPessoaisForm";
 import Preview from "./components/Preview/Preview";
 import ListaExperiencias from "./components/components.ListExperiencia/ListaExperiencia";
 import ListaEducacao from "./components/components.Educacao/ListaEducacao";
@@ -15,8 +15,10 @@ import type { Educacao } from "./components/components.Educacao/ListaEducacao";
 import ExportButtons from "./components/components.Exportacao/ExportButtons";
 import Header from "./components/components.Header/Header";
 
-// Não precisamos mais do jsPDF para essa abordagem
-// import jsPDF from "jspdf";
+// Importe as bibliotecas necessárias para a exportação direta
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import PreviewStyles from "./components/Preview/Preview.module.css"; // Importe os estilos aqui
 
 import ListaHabilidades from "./components/ListaHabilidades";
 
@@ -30,7 +32,7 @@ function App() {
   const [dados, setDados] = useState<DadosPessoais>({
     nome: "",
     cargoDesejado: "",
-    email: "",
+    email: "", 
     telefone: "",
     linkedin: "",
     github: "",
@@ -96,11 +98,11 @@ function App() {
   // Exportar TXT
   const handleExportTXT = () => {
     const experienciasTxt = experiencias.length
-      ? experiencias.map((exp, i) => `${i + 1}. Empresa: ${exp.empresa}\n   Cargo: ${exp.cargo}\n   Descrição: ${exp.descricao}\n   Período: ${exp.inicio} - ${exp.fim || "Atual"}`).join("\n\n")
+      ? experiencias.map((exp, i) => `${i + 1}. Empresa: ${exp.empresa}\n    Cargo: ${exp.cargo}\n    Descrição: ${exp.descricao}\n    Período: ${exp.inicio} - ${exp.fim || "Atual"}`).join("\n\n")
       : "Nenhuma experiência cadastrada";
 
     const educacoesTxt = educacoes.length
-      ? educacoes.map((edu, i) => `${i + 1}. Curso: ${edu.curso}\n   Instituição: ${edu.instituicao}\n   Período: ${edu.inicio} - ${edu.fim}`).join("\n\n")
+      ? educacoes.map((edu, i) => `${i + 1}. Curso: ${edu.curso}\n    Instituição: ${edu.instituicao}\n    Período: ${edu.inicio} - ${edu.fim}`).join("\n\n")
       : "Nenhuma educação cadastrada";
 
     const content = `
@@ -122,7 +124,7 @@ ${experienciasTxt}
 
 Educação:
 ${educacoesTxt}
- `;
+  `;
 
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -178,10 +180,78 @@ ${educacoesHtml}
     URL.revokeObjectURL(url);
   };
 
-  // Exportar PDF (sem cores, estilo limpo)
+  // Código para download direto do PDF (versão final)
   const handleExportPDF = () => {
-    // Usa o recurso nativo do navegador para imprimir/salvar como PDF
-    window.print();
+    // 1. Crie um elemento div temporário
+    const tempDiv = document.createElement('div');
+    tempDiv.className = PreviewStyles.previewContainer; // Aplica o estilo do preview
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.left = '-9999px'; // Oculta o elemento da tela
+    
+    // 2. Crie o conteúdo do currículo a partir dos dados, sem o header
+    const previewContent = `
+        <div class="${PreviewStyles.personalInfo}">
+            <h1>${dados.nome || "Seu Nome"}</h1>
+            <p class="${PreviewStyles.jobTitle}">${dados.cargoDesejado || "Cargo Desejado"}</p>
+            <p class="${PreviewStyles.contactInfo}">
+                ${dados.email || "email@exemplo.com"}
+                <span class="${PreviewStyles.contactSeparator}"> | </span>
+                ${dados.telefone || "(00) 00000-0000"}
+            </p>
+            <div class="${PreviewStyles.contactLinks}">
+                ${dados.linkedin ? `<a href="${dados.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>` : ''}
+                ${dados.github && dados.linkedin ? `<span class="${PreviewStyles.contactSeparator}"> | </span>` : ''}
+                ${dados.github ? `<a href="${dados.github}" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+            </div>
+        </div>
+        ${dados.resumo ? `<div class="${PreviewStyles.section}">
+            <h3 class="${PreviewStyles.sectionTitle}">Resumo Profissional</h3>
+            <p>${dados.resumo}</p>
+        </div>` : ''}
+        ${experiencias.length > 0 ? `<div class="${PreviewStyles.section}">
+            <h3 class="${PreviewStyles.sectionTitle}">Experiências</h3>
+            ${experiencias.map(exp => `<div class="${PreviewStyles.item}">
+                <p><strong>Empresa:</strong> ${exp.empresa}</p>
+                <p><strong>Cargo:</strong> ${exp.cargo}</p>
+                <p><strong>Descrição:</strong> ${exp.descricao}</p>
+                <p><strong>Período:</strong> ${exp.inicio} - ${exp.atual ? "Atual" : exp.fim}</p>
+            </div>`).join('')}
+        </div>` : ''}
+        ${educacoes.length > 0 ? `<div class="${PreviewStyles.section}">
+            <h3 class="${PreviewStyles.sectionTitle}">Educação</h3>
+            ${educacoes.map(ed => `<div class="${PreviewStyles.item}">
+                <p><strong>Curso:</strong> ${ed.curso}</p>
+                <p><strong>Instituição:</strong> ${ed.instituicao}</p>
+                <p><strong>Período:</strong> ${ed.inicio} - ${ed.fim}</p>
+            </div>`).join('')}
+        </div>` : ''}
+        ${dados.habilidades ? `<div class="${PreviewStyles.section}">
+            <h3 class="${PreviewStyles.sectionTitle}">Habilidades</h3>
+            <div class="${PreviewStyles.habilidadesList}">
+                ${dados.habilidades.split(",").map(h => `<span class="${PreviewStyles.skillTag}">${h.trim()}</span>`).join('')}
+            </div>
+        </div>` : ''}
+    `;
+
+    tempDiv.innerHTML = previewContent;
+    document.body.appendChild(tempDiv);
+
+    // 3. Captura o elemento temporário
+    html2canvas(tempDiv, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+    }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      doc.save("curriculo.pdf");
+      
+      // 4. Remove o elemento temporário
+      document.body.removeChild(tempDiv);
+    });
   };
 
   return (
