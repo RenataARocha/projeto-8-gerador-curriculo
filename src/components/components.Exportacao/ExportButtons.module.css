@@ -1,0 +1,49 @@
+.dividerLine {
+  width: 100%; /* Ocupa toda a largura do container */
+  height: 1px; /* Espessura da linha */
+  background: linear-gradient(90deg, rgba(255, 192, 203, 0.671), #fa93b9e3, rgba(255, 192, 203, 0.671));
+  margin-bottom: 20px; /* Espaço abaixo da linha para os botões */
+}
+
+.exportContainer {
+  background-color: #fff; /* Fundo branco para a caixa dos botões */
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.exportRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center; /* Alinha os botões na vertical */
+}
+
+.exportRow button {
+  background: #fff;
+  border: 1px solid #ff6eaf69;
+  color: #585858;/* Borda cinza */
+  padding: 10px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  flex-grow: 1; /* Permite que os botões cresçam para ocupar espaço */
+  min-width: 80px; /* Garante um tamanho mínimo para os botões */
+  text-align: center; /* Centraliza o texto */
+}
+
+.exportRow button:hover {
+  color: #ff4b9b;
+}
+
+.clearAllButton {
+  background: #fff !important; 
+  color: #585858 !important; 
+  border: 1px solid #ff6eaf69 !important; 
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.clearAllButton:hover {
+  color: #ff4b9b !important; 
+}

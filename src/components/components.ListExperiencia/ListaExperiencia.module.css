@@ -1,58 +1,76 @@
+/*  CONTAINER PRINCIPAL */
 .listaExperienciasContainer {
   background: white;
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
- 
 }
 
-.formHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.formHeader h2 {
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
-
-.dots {
-  display: flex;
-  gap: 4px;
-}
-
-.dots span {
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
-  border-radius: 50%;
-}
-
+/* LISTA DE EXPERIÊNCIAS */
 .experienciasList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* ITEM DE EXPERIÊNCIA */
 .experienciaItem {
-  background: #fff0f5;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 10px;
-  padding: 10px;
-  border: 1px solid #f5b0d8;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Cabeçalho com título + botão de remover */
+.headerItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerItem h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.headerItem button {
+  background: transparent;
+  border: none;
+  color: #ff6a95;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.headerItem button:hover {
+  text-decoration: underline;
+}
+
+/* CAMPOS DE TEXTO E ÁREA  */
 .experienciaItem input,
 .experienciaItem textarea {
   width: 100%;
   margin-bottom: 8px;
-  font-size: 13px;
-  padding: 8px;
-  border: 1px solid #f5b0d8;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 8px;
   outline: none;
+  box-sizing: border-box;
+}
+
+.experienciaItem input::placeholder,
+.experienciaItem textarea::placeholder {
+  color: #888;
 }
 
 .experienciaItem input:focus,
@@ -60,40 +78,53 @@
   border-color: #ff6a95;
 }
 
+/* CAMPOS DE DATA */
 .dateFields {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-.checkboxLabel {
+.dateFields label {
+  display: flex;
+  flex-direction: column;
   font-size: 13px;
+  color: #555;
+}
+
+.dateFields input[type="month"] {
+  width: 150px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* CHECKBOX  */
+.checkboxLabel {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  font-size: 13px;
+  color: #555;
 }
 
-button {
+/* Estilos para o botão Adicionar experiência */
+.addButton {
   background: #ff6a95;
   color: white;
   border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-button:hover {
-  background: #e05580;
-}
-
-.addButton {
-  width: 100%;
-  margin-top: 10px;
   padding: 10px;
   border-radius: 15px;
   font-weight: bold;
   font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.addButton:hover {
+  background: #e05580;
 }

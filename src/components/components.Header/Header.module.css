@@ -1,0 +1,44 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+  background: #ffffffd9;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 95%;
+  margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  font-family: 'Playfair Display', serif; /* Cinza neutro pro título base */
+}
+
+.highlight {
+  color: #ff6a95; /* Pink chamativo para destaque */
+  font-weight: 900;
+}
+
+.header p {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #666; /* Cinza pro subtítulo */
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
+  border-radius: 50%;
+}
