@@ -1,0 +1,122 @@
+.listaHabilidadesContainer {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+/* Botão principal para abrir o form */
+.addButton {
+    background: #ff6a95;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.addButton:hover {
+    background: #e05580;
+}
+
+/* Form de habilidades */
+.habilidadeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.habilidadeForm input,
+.habilidadeForm select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 110, 175, 0.4);
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.habilidadeForm input:focus,
+.habilidadeForm select:focus {
+    border-color: #ff6a95;
+}
+
+.addButtonForm {
+    background: #ff6a95;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.addButtonForm:hover {
+    background: #e05580;
+}
+
+/* Lista de habilidades */
+.listaTitulo {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.habilidadesList {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.habilidadeItem {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 110, 175, 0.4);
+    border-radius: 10px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ 
+.removeButtonForm {
+  background: transparent;
+  border: none;
+  color: #ff6a95;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.removeButtonForm:hover {
+    text-decoration: underline;
+  color: #e05580;
+}
+
+
+.dots {
+    display: flex;
+    gap: 4px;
+}
+
+.dots span {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
+    border-radius: 50%;
+}

@@ -64,8 +64,8 @@
 
 /* Estado ativo ou foco */
 .floatingLabel.active::before,
-.floatingLabel input:focus ~ ::before,
-.floatingLabel textarea:focus ~ ::before {
+.floatingLabel input:focus~ ::before,
+.floatingLabel textarea:focus~ ::before {
   top: 0.4rem;
   font-size: 0.75rem;
   color: #ff4b9b;
@@ -81,12 +81,6 @@
 .resumoField {
   grid-column: 1 / 3;
   height: 100px;
-}
-
-
-
-.habilidadesField {
-  grid-column: 1 / 3;
 }
 
 /* Erros */

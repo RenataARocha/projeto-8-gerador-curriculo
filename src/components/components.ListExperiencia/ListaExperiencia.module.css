@@ -128,3 +128,15 @@
 .addButton:hover {
   background: #e05580;
 }
+
+.dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
+  border-radius: 50%;
+}
