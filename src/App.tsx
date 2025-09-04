@@ -263,8 +263,8 @@ ${educacoesHtml}
               removerHabilidade={removerHabilidade}
             />
           </div>
-        </form>
-
+        </form> 
+        
         <ExportButtons
           onExportPDF={handleExportPDF}
           onExportWord={handleExportWord}
