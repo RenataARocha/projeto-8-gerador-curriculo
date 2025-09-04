@@ -49,9 +49,8 @@ export default function DadosPessoaisForm({ dados, setDados }: Props) {
 
       {/* Cargo Desejado */}
       <label
-        className={`${styles.floatingLabel} ${
-          dados.cargoDesejado ? styles.active : ""
-        }`}
+        className={`${styles.floatingLabel} ${dados.cargoDesejado ? styles.active : ""
+          }`}
         data-placeholder="Cargo Desejado"
       >
         <input
@@ -130,27 +129,15 @@ export default function DadosPessoaisForm({ dados, setDados }: Props) {
       </label>
 
       {/* Resumo */}
-       <textarea
-  className={`${styles.floatingLabel} ${styles.resumoField} ${dados.resumo ? styles.active : ""}`}
-  value={dados.resumo}
-  maxLength={maxResumo}
-  onChange={(e) => setDados({ ...dados, resumo: e.target.value })}
-  placeholder="Digite um tópico por linha para o resumo profissional"
-  rows={5}
-/>
-      {/* Habilidades */}
-      <label
-        className={`${styles.floatingLabel} ${dados.habilidades ? styles.active : ""} ${
-          styles.habilidadesField
-        }`}
-        data-placeholder="Habilidades (separadas por vírgula)"
-      >
-        <input
-          type="text"
-          value={dados.habilidades || ""}
-          onChange={(e) => setDados({ ...dados, habilidades: e.target.value })}
-        />
-      </label>
+      <textarea
+        className={`${styles.floatingLabel} ${styles.resumoField} ${dados.resumo ? styles.active : ""}`}
+        value={dados.resumo}
+        maxLength={maxResumo}
+        onChange={(e) => setDados({ ...dados, resumo: e.target.value })}
+        placeholder="Digite um tópico por linha para o resumo profissional"
+        rows={5}
+      />
+     
     </form>
   );
 }

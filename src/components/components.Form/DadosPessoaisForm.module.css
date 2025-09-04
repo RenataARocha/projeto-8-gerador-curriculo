@@ -83,12 +83,6 @@
   height: 100px;
 }
 
-
-
-.habilidadesField {
-  grid-column: 1 / 3;
-}
-
 /* Erros */
 .erro {
   border-color: red;

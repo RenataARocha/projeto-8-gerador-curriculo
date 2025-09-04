@@ -1,26 +1,32 @@
 // src/App.tsx
 import "./index.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import DadosPessoaisForm from "./components/components.Form/DadosPessoaisForm";
 import Preview from "./components/Preview/Preview";
 import ListaExperiencias from "./components/components.ListExperiencia/ListaExperiencia";
 import ListaEducacao from "./components/components.Educacao/ListaEducacao";
-
-import type { DadosPessoais, Experiencia } from "./components/types/types";
-import type { Educacao } from "./components/components.Educacao/ListaEducacao";
+import ListaHabilidades from "./components/Habilidades/ListaHabilidades";
 import ExportButtons from "./components/components.Exportacao/ExportButtons";
 import Header from "./components/components.Header/Header";
 
-// Importe as bibliotecas necessárias para a exportação direta
+import type { DadosPessoais, Experiencia } from "./components/types/types";
+import type { Educacao } from "./components/components.Educacao/ListaEducacao";
+
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import PreviewStyles from "./components/Preview/Preview.module.css"; // Importe os estilos aqui
+import PreviewStyles from "./components/Preview/Preview.module.css";
+
+export interface Habilidade {
+  id: number;
+  nome: string;
+  nivel: string;
+}
 
 function App() {
   const [dados, setDados] = useState<DadosPessoais>({
     nome: "",
     cargoDesejado: "",
-    email: "", 
+    email: "",
     telefone: "",
     linkedin: "",
     github: "",
@@ -30,6 +36,21 @@ function App() {
 
   const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
   const [educacoes, setEducacoes] = useState<Educacao[]>([]);
+  const [listaDeHabilidades, setListaDeHabilidades] = useState<Habilidade[]>([]);
+
+  const adicionarHabilidade = (nome: string, nivel: string) => {
+    const novaHabilidade: Habilidade = { id: Date.now(), nome, nivel };
+    setListaDeHabilidades((listaAnterior) => [...listaAnterior, novaHabilidade]);
+  };
+
+  const removerHabilidade = (id: number) => {
+    setListaDeHabilidades((listaAnterior) => listaAnterior.filter((h) => h.id !== id));
+  };
+
+  useEffect(() => {
+    const stringHabilidades = listaDeHabilidades.map((h) => `${h.nome} (${h.nivel})`).join(", ");
+    setDados((dadosAtuais) => ({ ...dadosAtuais, habilidades: stringHabilidades }));
+  }, [listaDeHabilidades]);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -153,7 +174,7 @@ ${educacoesHtml}
     tempDiv.className = PreviewStyles.previewContainer; // Aplica o estilo do preview
     tempDiv.style.position = 'absolute';
     tempDiv.style.left = '-9999px'; // Oculta o elemento da tela
-    
+
     // 2. Crie o conteúdo do currículo a partir dos dados, sem o header
     const previewContent = `
         <div class="${PreviewStyles.personalInfo}">
@@ -211,10 +232,10 @@ ${educacoesHtml}
       const doc = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
+
       doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       doc.save("curriculo.pdf");
-      
+
       // 4. Remove o elemento temporário
       document.body.removeChild(tempDiv);
     });
@@ -226,20 +247,39 @@ ${educacoesHtml}
       <div className="main-content">
         <form className="form-container">
           <DadosPessoaisForm dados={dados} setDados={setDados} />
-          <ListaExperiencias onChange={setExperiencias} />
-          <ListaEducacao onChange={setEducacoes} />
 
-          <ExportButtons
-            onExportPDF={handleExportPDF}
-            onExportWord={handleExportWord}
-            onExportTXT={handleExportTXT}
-            onExportJSON={handleExportJSON}
-            onClearAll={handleClearAll}
-          />
+          <div className="section-wrapper">
+            <ListaExperiencias onChange={setExperiencias} />
+          </div>
+
+          <div className="section-wrapper">
+            <ListaEducacao onChange={setEducacoes} />
+          </div>
+
+          <div className="section-wrapper">
+            <ListaHabilidades
+              habilidades={listaDeHabilidades}
+              adicionarHabilidade={adicionarHabilidade}
+              removerHabilidade={removerHabilidade}
+            />
+          </div>
         </form>
 
+        <ExportButtons
+          onExportPDF={handleExportPDF}
+          onExportWord={handleExportWord}
+          onExportTXT={handleExportTXT}
+          onExportJSON={handleExportJSON}
+          onClearAll={handleClearAll}
+        />
+
         <div className="preview-container" ref={previewRef}>
-          <Preview dados={dados} experiencias={experiencias} educacoes={educacoes} />
+          <Preview
+            dados={dados}
+            experiencias={experiencias}
+            educacoes={educacoes}
+            listaDeHabilidades={listaDeHabilidades}
+          />
         </div>
       </div>
     </>

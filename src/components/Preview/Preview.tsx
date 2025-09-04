@@ -1,5 +1,5 @@
 // src/components/Preview/Preview.tsx
-
+import type { Habilidade } from "../../App"; 
 import type { DadosPessoais, Experiencia } from "../types/types";
 import type { Educacao } from "../components.Educacao/ListaEducacao";
 import styles from "./Preview.module.css";
@@ -8,16 +8,15 @@ type Props = {
   dados: DadosPessoais;
   experiencias?: Experiencia[];
   educacoes?: Educacao[];
+  listaDeHabilidades?: Habilidade[];
 };
 
 export default function Preview({
   dados,
   experiencias = [],
   educacoes = [],
+  listaDeHabilidades = [],
 }: Props) {
-  const habilidades = dados.habilidades
-    ? dados.habilidades.split(",").map((h) => h.trim()).filter(Boolean)
-    : [];
 
   return (
     <div className={styles.previewContainer}>
@@ -25,7 +24,7 @@ export default function Preview({
         <div className={styles.topBar}>
           <span className={styles.dot} style={{ backgroundColor: 'rgb(255, 179, 192)' }}></span>
           <span className={styles.dot} style={{ backgroundColor: 'rgb(255, 179, 192)' }}></span>
-          <span className={styles.dot} style={{ backgroundColor: ' #f806b0' }}></span>
+          <span className={styles.dot} style={{ backgroundColor: '#f806b0' }}></span>
         </div>
         <p className={styles.title}>Preview do Currículo</p>
       </div>
@@ -60,6 +59,7 @@ export default function Preview({
           </ul>
         </div>
       )}
+
       {experiencias.length > 0 && (
         <div className={styles.section}>
           <h3 className={styles.sectionTitle1}>Experiências</h3>
@@ -87,18 +87,18 @@ export default function Preview({
         </div>
       )}
 
-      {/* A seção de Habilidades foi movida para aqui, após Experiências e Educação. */}
-      {habilidades.length > 0 && (
+      {listaDeHabilidades.length > 0 && (
         <div className={styles.section}>
           <h3 className={styles.sectionTitle1}>Habilidades</h3>
           <div className={styles.habilidadesList}>
-            {habilidades.map((h, index) => (
-              <span key={index} className={styles.skillTag}>{h}</span>
+            {listaDeHabilidades.map((h) => (
+              <span key={h.id} className={styles.skillTag}>
+                {h.nome} ({h.nivel})
+              </span>
             ))}
           </div>
         </div>
       )}
-
     </div>
   );
 }
