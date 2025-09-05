@@ -23,7 +23,7 @@ export interface Experiencia {
 export interface Habilidade {
   id: number;
   nome: string;
-  nivel: "Básico" | "Intermediário" | "Avançado";
+  nivel: "Nenhum" | "Básico" | "Intermediário" | "Avançado";
 }
 
 export interface Educacao {

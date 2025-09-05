@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import styles from "./ListaExperiencia.module.css";
 import type { Experiencia } from "../types/types";
 
 interface ListaExperienciasProps {
   onChange: (experiencias: Experiencia[]) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
+// 1. Tipagem correta para forwardRef
+// O primeiro argumento é a tipagem do handle (resetForm)
+// O segundo é a tipagem das props
+const ListaExperiencias = forwardRef<{ resetForm: () => void }, ListaExperienciasProps>(({ onChange }, ref) => {
   const [experiencias, setExperiencias] = useState<Experiencia[]>([]);
+
+  // 2. Usando useImperativeHandle para expor o método de reset
+  useImperativeHandle(ref, () => ({
+    resetForm() {
+      setExperiencias([]);
+      onChange([]);
+    },
+  }));
 
   const addExperiencia = () => {
     const nova: Experiencia = {
@@ -38,10 +51,10 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
     const novaLista = experiencias.map((exp) =>
       exp.id === id
         ? {
-          ...exp,
-          [campo]: valor,
-          ...(campo === "atual" && valor ? { fim: "" } : {}),
-        }
+            ...exp,
+            [campo]: valor,
+            ...(campo === "atual" && valor ? { fim: "" } : {}),
+          }
         : exp
     );
     setExperiencias(novaLista);
@@ -51,8 +64,7 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
   return (
     <div className={styles.listaExperienciasContainer}>
       <div className={styles.experienciasList}>
-        <div className={styles.formHeader}>
-      </div>
+        <div className={styles.formHeader}></div>
         {experiencias.map((exp, index) => (
           <div key={exp.id} className={styles.experienciaItem}>
             <div className={styles.headerItem}>
@@ -118,6 +130,6 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
       </button>
     </div>
   );
-};
+});
 
 export default ListaExperiencias;

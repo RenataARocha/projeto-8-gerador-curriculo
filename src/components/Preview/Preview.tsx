@@ -143,7 +143,7 @@ export default function Preview({
               <span key={h.id} className={styles.skillTag}>
                 {h.nome}{" "}
                 {h.nivel !== "Nenhum" && `(${h.nivel})`}
-                {index < todasAsHabilidades.length - 1 && <span className={styles.separator}>|</span>}
+                {index < todasAsHabilidades.length - 1 && <span className={styles.separator}> | </span>}
               </span>
             ))}
           </div>

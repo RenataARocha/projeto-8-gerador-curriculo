@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import type { DadosPessoais } from "../types/types";
 import styles from "./DadosPessoaisForm.module.css";
 
@@ -7,7 +7,7 @@ type Props = {
   setDados: React.Dispatch<React.SetStateAction<DadosPessoais>>;
 };
 
-export default function DadosPessoaisForm({ dados, setDados }: Props) {
+const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
   const maxResumo = 1000;
 
   const [touched, setTouched] = useState({
@@ -18,6 +18,25 @@ export default function DadosPessoaisForm({ dados, setDados }: Props) {
 
   const validarEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  useImperativeHandle(ref, () => ({
+    resetForm() {
+      setTouched({
+        nome: false,
+        email: false,
+        telefone: false,
+      });
+      setDados({
+        nome: "",
+        cargoDesejado: "",
+        email: "",
+        telefone: "",
+        linkedin: "",
+        github: "",
+        resumo: "",
+      });
+    },
+  }));
 
   return (
     <form className={styles.form}>
@@ -106,7 +125,8 @@ export default function DadosPessoaisForm({ dados, setDados }: Props) {
 
       {/* LinkedIn */}
       <label
-        className={`${styles.floatingLabel} ${dados.linkedin ? styles.active : ""}`}
+        className={`${styles.floatingLabel} ${dados.linkedin ? styles.active : ""
+          }`}
         data-placeholder="LinkedIn (opcional)"
       >
         <input
@@ -130,14 +150,16 @@ export default function DadosPessoaisForm({ dados, setDados }: Props) {
 
       {/* Resumo */}
       <textarea
-        className={`${styles.floatingLabel} ${styles.resumoField} ${dados.resumo ? styles.active : ""}`}
+        className={`${styles.floatingLabel} ${styles.resumoField} ${dados.resumo ? styles.active : ""
+          }`}
         value={dados.resumo}
         maxLength={maxResumo}
         onChange={(e) => setDados({ ...dados, resumo: e.target.value })}
         placeholder="Digite um tópico por linha para o resumo profissional"
         rows={5}
       />
-     
     </form>
   );
-}
+});
+
+export default DadosPessoaisForm;

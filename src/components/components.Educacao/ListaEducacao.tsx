@@ -1,5 +1,4 @@
-// src/components/components.Educacao/ListaEducacao.tsx
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import styles from "./ListaEducacao.module.css";
 
 export type Educacao = {
@@ -12,10 +11,20 @@ export type Educacao = {
 
 interface Props {
   onChange: (educacoes: Educacao[]) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-export default function ListaEducacao({ onChange }: Props) {
+// Tipagem correta para forwardRef
+const ListaEducacao = forwardRef<{ resetForm: () => void }, Props>(({ onChange }, ref) => {
   const [educacoes, setEducacoes] = useState<Educacao[]>([]);
+
+  useImperativeHandle(ref, () => ({
+    resetForm() {
+      setEducacoes([]);
+      onChange([]);
+    },
+  }));
 
   const addEducacao = () => {
     const nova: Educacao = { id: Date.now(), instituicao: "", curso: "", inicio: "", fim: "" };
@@ -40,8 +49,7 @@ export default function ListaEducacao({ onChange }: Props) {
 
   return (
     <div className={styles.listaEducacaoContainer}>
-      <div className={styles.formHeader}>
-      </div>
+      <div className={styles.formHeader}></div>
 
       {educacoes.map((e, index) => (
         <div key={e.id} className={styles.educacaoItem}>
@@ -89,10 +97,11 @@ export default function ListaEducacao({ onChange }: Props) {
         </div>
       ))}
 
-
       <button type="button" className={styles.addButton} onClick={addEducacao}>
         + Adicionar Educação
       </button>
     </div>
   );
-}
+});
+
+export default ListaEducacao;
