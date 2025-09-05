@@ -83,6 +83,12 @@
   height: 100px;
 }
 
+.resumoField:focus {
+  border-color: #ff4b9b;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 105, 180, 0.5);
+}
+
 /* Erros */
 .erro {
   border-color: red;

@@ -8,7 +8,6 @@ export interface DadosPessoais {
   linkedin: string;
   github: string;
   resumo: string;
-  habilidades: string; // ainda mantido caso queira string resumida
 }
 
 export interface Experiencia {
@@ -21,14 +20,12 @@ export interface Experiencia {
   atual: boolean;
 }
 
-// Nova interface para Habilidade
 export interface Habilidade {
   id: number;
   nome: string;
   nivel: "Básico" | "Intermediário" | "Avançado";
 }
 
-// Nova interface para Educação
 export interface Educacao {
   id: number;
   instituicao: string;

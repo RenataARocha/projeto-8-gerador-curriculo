@@ -41,11 +41,6 @@ export default function ListaEducacao({ onChange }: Props) {
   return (
     <div className={styles.listaEducacaoContainer}>
       <div className={styles.formHeader}>
-        <div className={styles.dots}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
 
       {educacoes.map((e, index) => (

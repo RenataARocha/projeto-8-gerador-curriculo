@@ -52,11 +52,6 @@ const ListaExperiencias: React.FC<ListaExperienciasProps> = ({ onChange }) => {
     <div className={styles.listaExperienciasContainer}>
       <div className={styles.experienciasList}>
         <div className={styles.formHeader}>
-        <div className={styles.dots}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </div>
         {experiencias.map((exp, index) => (
           <div key={exp.id} className={styles.experienciaItem}>

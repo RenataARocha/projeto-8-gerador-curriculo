@@ -8,23 +8,11 @@
   box-sizing: border-box;
 }
 
-/* CABEÇALHO (com os 3 pontos)*/
+/* CABEÇALHO */
 .formHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.dots {
-  display: flex;
-  gap: 4px;
-}
-
-.dots span {
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(90deg, pink, rgb(255, 179, 192), #f806b0);
-  border-radius: 50%;
 }
 
 /* LISTA DE EDUCAÇÕES */
@@ -107,7 +95,7 @@
   background: #e05580;
 }
 
-/* Cabeçalho do item - igual ao de experiência */
+/* Cabeçalho do item */
 .headerItem {
   display: flex;
   justify-content: space-between;

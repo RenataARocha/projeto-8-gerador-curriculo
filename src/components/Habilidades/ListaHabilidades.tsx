@@ -1,3 +1,4 @@
+// src/components/Habilidades/ListaHabilidades.tsx
 import { useState } from "react";
 import styles from "./ListaHabilidades.module.css";
 
@@ -9,64 +10,54 @@ interface Habilidade {
 
 interface ListaHabilidadesProps {
   habilidades: Habilidade[];
-  adicionarHabilidade: (nome: string, nivel: string) => void;
+  adicionarHabilidade: (habilidades: string) => void;
   removerHabilidade: (id: number) => void;
+  habilidadeTemp: string;
+  setHabilidadeTemp: (habilidade: string) => void;
 }
 
 export default function ListaHabilidades({
   habilidades,
   adicionarHabilidade,
   removerHabilidade,
+  habilidadeTemp,
+  setHabilidadeTemp,
 }: ListaHabilidadesProps) {
-  const [nomeHabilidade, setNomeHabilidade] = useState("");
-  const [nivelHabilidade, setNivelHabilidade] = useState("Básico");
   const [mostrarForm, setMostrarForm] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!nomeHabilidade.trim()) return;
-    adicionarHabilidade(nomeHabilidade, nivelHabilidade);
-    setNomeHabilidade("");
-    setNivelHabilidade("Básico");
+  const handleToggleForm = () => {
+    setMostrarForm(!mostrarForm);
+    if (mostrarForm) {
+      setHabilidadeTemp("");
+    }
+  };
+
+  const handleAddClick = () => {
+    adicionarHabilidade(habilidadeTemp);
+    setMostrarForm(false);
   };
 
   return (
     <div className={styles.listaHabilidadesContainer}>
       <div className={styles.formHeader}>
-        <div className={styles.dots}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        <button
+          type="button"
+          className={mostrarForm ? styles.salvarButton : styles.adicionarButton}
+          onClick={mostrarForm ? handleAddClick : handleToggleForm}
+        >
+          {mostrarForm ? "Adicionar" : "+ Adicionar Habilidade"}
+        </button>
       </div>
-     <button
-  type="button" 
-  className={mostrarForm ? styles.removeButtonForm : styles.addButtonForm}
-  onClick={() => setMostrarForm(!mostrarForm)}
->
-  {mostrarForm ? "×" : "+ Adicionar Habilidade"}
-</button>
 
       {mostrarForm && (
-        <form onSubmit={handleSubmit} className={styles.habilidadeForm}>
+        <div className={styles.habilidadeForm}>
           <input
             type="text"
-            placeholder="Nome da Habilidade"
-            value={nomeHabilidade}
-            onChange={(e) => setNomeHabilidade(e.target.value)}
+            placeholder="Ex: HTML, CSS, JavaScript"
+            value={habilidadeTemp}
+            onChange={(e) => setHabilidadeTemp(e.target.value)}
           />
-          <select
-            value={nivelHabilidade}
-            onChange={(e) => setNivelHabilidade(e.target.value)}
-          >
-            <option>Básico</option>
-            <option>Intermediário</option>
-            <option>Avançado</option>
-          </select>
-          <button type="submit" className={styles.addButtonForm}>
-            Adicionar
-          </button>
-        </form>
+        </div>
       )}
 
       {habilidades.length > 0 && (
@@ -76,13 +67,14 @@ export default function ListaHabilidades({
             {habilidades.map((hab) => (
               <li key={hab.id} className={styles.habilidadeItem}>
                 <span>
-                  <strong>{hab.nome}</strong> ({hab.nivel})
+                  <strong>{hab.nome}</strong>{" "}
+                  {hab.nivel !== "Nenhum" && <span>({hab.nivel})</span>}
                 </span>
                 <button
                   className={styles.removeButton}
                   onClick={() => removerHabilidade(hab.id)}
                 >
-                  Remover
+                  &times;
                 </button>
               </li>
             ))}

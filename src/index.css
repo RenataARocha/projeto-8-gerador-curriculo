@@ -41,13 +41,12 @@ h3 {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   min-height: 800px;
-  /* Tamanho próximo de A4 */
   max-height: 1000px;
   overflow-y: auto;
 }
 
 .section-wrapper {
-  margin-top: 24px; /* Espaço entre seções */
+  margin-top: 10x; /* Espaço entre seções */
   padding: 16px;
   border-radius: 8px;
   background-color: #f9f9f9; /* mantém clean */

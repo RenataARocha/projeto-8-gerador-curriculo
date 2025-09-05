@@ -110,9 +110,6 @@
   display: inline;
 }
 
-.skillTag:not(:last-child)::after {
-  content: " | ";
-}
 
 /* ========================================= */
 /* ESTILOS DE IMPRESSÃO - PARA O PDF FINAL */
