@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import styles from "./ListaExperiencia.module.css";
 import type { Experiencia } from "../types/types";
 
