@@ -1,4 +1,3 @@
-// src/components/Preview/Preview.tsx
 import type { Habilidade } from "../../App";
 import type { DadosPessoais, Experiencia } from "../types/types";
 import type { Educacao } from "../components.Educacao/ListaEducacao";
@@ -19,7 +18,6 @@ export default function Preview({
   listaDeHabilidades = [],
   habilidadeTemp,
 }: Props) {
-  // Processa as habilidades digitadas no input
   const habilidadesTemporarias = habilidadeTemp
     .split(",")
     .map((nome) => ({
@@ -29,7 +27,6 @@ export default function Preview({
     }))
     .filter((h) => h.nome);
 
-  // Combina as habilidades salvas e as temporárias em uma única lista
   const todasAsHabilidades = [
     ...listaDeHabilidades,
     ...habilidadesTemporarias,
@@ -81,6 +78,7 @@ export default function Preview({
             </a>
           )}
         </div>
+        <hr className={styles.separatorLine} />
       </div>
 
       {dados.resumo && (
@@ -93,6 +91,10 @@ export default function Preview({
           </ul>
         </div>
       )}
+      {(dados.resumo && (experiencias.length > 0 || educacoes.length > 0 || todasAsHabilidades.length > 0)) && (
+        <hr className={styles.separatorLine} />
+      )}
+
       {experiencias.length > 0 && (
         <div className={styles.section}>
           <h3 className={styles.sectionTitle1}>Experiências</h3>
@@ -104,7 +106,7 @@ export default function Preview({
               <p>
                 <strong>Cargo:</strong> {exp.cargo}
               </p>
-              <p>
+              <p className={styles.descricao}>
                 <strong>Descrição:</strong> {exp.descricao}
               </p>
               <p>
@@ -114,6 +116,9 @@ export default function Preview({
             </div>
           ))}
         </div>
+      )}
+      {(experiencias.length > 0 && (educacoes.length > 0 || todasAsHabilidades.length > 0)) && (
+        <hr className={styles.separatorLine} />
       )}
 
       {educacoes.length > 0 && (
@@ -134,6 +139,9 @@ export default function Preview({
           ))}
         </div>
       )}
+      {(educacoes.length > 0 && todasAsHabilidades.length > 0) && (
+        <hr className={styles.separatorLine} />
+      )}
 
       {todasAsHabilidades.length > 0 && (
         <div className={styles.section}>
@@ -143,7 +151,9 @@ export default function Preview({
               <span key={h.id} className={styles.skillTag}>
                 {h.nome}{" "}
                 {h.nivel !== "Nenhum" && `(${h.nivel})`}
-                {index < todasAsHabilidades.length - 1 && <span className={styles.separator}> | </span>}
+                {index < todasAsHabilidades.length - 1 && (
+                  <span className={styles.separator}> | </span>
+                )}
               </span>
             ))}
           </div>
