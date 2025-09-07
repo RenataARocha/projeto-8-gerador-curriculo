@@ -247,22 +247,28 @@ ${educacoesHtml}
 
 
   // 🔹 Exportar PDF
-const handleExportPDF = () => {
+  const handleExportPDF = () => {
   const previewEl = previewRef.current as HTMLElement | null;
   if (!previewEl) return;
 
   const doc = new jsPDF("p", "mm", "a4");
   const a4Width = 210;
-  const padding = 8;
-  const targetWidthMm = a4Width - 2 * padding;
+  const padding = 18;
+  const targetWidthMm = a4Width * padding;
   const contentWidthPx = previewEl.offsetWidth;
   if (!contentWidthPx) return;
   const mmPerPx = targetWidthMm / contentWidthPx;
-  const xOffset = padding;
-  const yOffset = padding;
+  const xOffset = 6;
+  const yOffset = 2;
 
   const headerElement = previewEl.querySelector(`.${PreviewStyles.header}`) as HTMLElement | null;
   if (headerElement) headerElement.style.display = "none";
+
+  // Cria o nome do arquivo baseado no nome do usuário
+  const nomeArquivo = (dados.nome || "curriculo")
+    .trim()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-zA-Z0-9_]/g, "");
 
   doc.html(previewEl, {
     x: xOffset,
@@ -276,18 +282,14 @@ const handleExportPDF = () => {
     callback: (doc) => {
       try {
         const links = previewEl.querySelectorAll("a, .contactRow span");
-
         links.forEach((link) => {
           let href = link.getAttribute("href") || link.textContent || "";
           href = href.trim();
           if (!href) return;
 
-          // Se for e-mail, adiciona mailto:
           if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(href) && !href.startsWith("mailto:")) {
             href = `mailto:${href}`;
-          }
-          // Se for link sem protocolo, adiciona https:
-          else if (!/^https?:\/\//i.test(href) && !href.startsWith("mailto:")) {
+          } else if (!/^https?:\/\//i.test(href) && !href.startsWith("mailto:")) {
             href = href.startsWith("www.") ? `https://${href}` : `https://${href}`;
           }
 
@@ -302,18 +304,17 @@ const handleExportPDF = () => {
           const wMm = rect.width * mmPerPx;
           const hMm = rect.height * mmPerPx;
 
-          // Adiciona link clicável invisível
           doc.link(xMm, yMm, Math.max(wMm, 1), Math.max(hMm, 1), { url: href });
         });
 
-        doc.save("curriculo.pdf");
+        // Usa o nome do usuário para salvar
+        doc.save(`${nomeArquivo}.pdf`);
       } finally {
         if (headerElement) headerElement.style.display = "";
       }
     },
   });
 };
-
 
   return (
     <>

@@ -55,7 +55,7 @@ export default function Preview({
 
       {/* INFORMAÇÕES PESSOAIS */}
       <div className={styles.personalInfo}>
-        <h1>{dados.nome || "Seu Nome"}</h1>
+        <h1>{(dados.nome || "Seu Nome").replace(/\s+/g, " ").trim()}</h1>
         <p className={styles.jobTitle}>
           {dados.cargoDesejado || "Cargo Desejado"}
         </p>
@@ -64,6 +64,7 @@ export default function Preview({
           {/* linha 1 */}
           <div className={styles.contactRow}>
             <span>{dados.email || "email@exemplo.com"}</span>
+            <span> | </span>
             <span>{dados.telefone || "(00) 00000-0000"}</span>
           </div>
 
