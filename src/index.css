@@ -53,52 +53,7 @@ h3 {
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-/* Se quiser, deixa o botão de adicionar habilidades igual aos outros */
+
 .section-wrapper button {
   margin-top: 12px;
-}
-
-
-@media print {
-  body {
-    /* Define o formato da página como A4 */
-    width: 21cm;
-    height: 29.7cm;
-    margin: 0;
-    padding: 0;
-  }
-
-  .header,
-  .form-container,
-  .export-buttons {
-    /* Oculta elementos que não devem aparecer na impressão */
-    display: none !important;
-  }
-
-  .main-content {
-    /* Garante que o conteúdo de impressão tenha as margens e o estilo corretos */
-    display: block;
-    padding: 2cm;
-    /* Margens para a página */
-    box-sizing: border-box;
-  }
-
-  .preview-container {
-    /* Altera o estilo da pré-visualização para parecer um documento */
-    box-shadow: none;
-    border: none;
-    width: 100%;
-    min-height: auto;
-  }
-
-  /* Estiliza os links para ficarem azuis, sem sublinhado */
-  a {
-    color: #0000ff;
-    text-decoration: none;
-  }
-
-  /* Garante que o texto seja preto */
-  * {
-    color: #000000 !important;
-  }
 }

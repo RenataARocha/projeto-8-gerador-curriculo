@@ -11,9 +11,9 @@ import Header from "./components/components.Header/Header";
 import type { DadosPessoais, Experiencia } from "./components/types/types";
 import type { Educacao } from "./components/components.Educacao/ListaEducacao";
 
+import PreviewStyles from "./components/Preview/Preview.module.css"
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-import PreviewStyles from "./components/Preview/Preview.module.css";
+
 
 export interface Habilidade {
   id: number;
@@ -168,7 +168,7 @@ ${experienciasTxt}
 
 Educação:
 ${educacoesTxt}
- `;
+`;
 
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -204,7 +204,8 @@ ${educacoesTxt}
       ? `<ul>${listaDeHabilidades
         .map(
           (h) =>
-            `<li>${h.nome} ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""}</li>`
+            `<li>${h.nome} ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""
+            }</li>`
         )
         .join("")}</ul>`
       : "<p>Nenhuma habilidade cadastrada</p>";
@@ -244,113 +245,75 @@ ${educacoesHtml}
     URL.revokeObjectURL(url);
   };
 
+
   // 🔹 Exportar PDF
-  const handleExportPDF = () => {
-    const tempDiv = document.createElement("div");
-    tempDiv.className = PreviewStyles.previewContainer;
-    tempDiv.style.position = "absolute";
-    tempDiv.style.left = "-9999px";
+const handleExportPDF = () => {
+  const previewEl = previewRef.current as HTMLElement | null;
+  if (!previewEl) return;
 
-    const habilidadesHtml = listaDeHabilidades.length
-      ? `<div class="${PreviewStyles.section}">
- <h3 class="${PreviewStyles.sectionTitle}">Habilidades</h3>
- <div class="${PreviewStyles.habilidadesList}">
-  ${listaDeHabilidades
-        .map(
-          (h) =>
-            `<span class="${PreviewStyles.skillTag}">${h.nome} ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""
-            }</span>`
-        )
-        .join("")}
- </div>
-  </div>`
-      : "";
+  const doc = new jsPDF("p", "mm", "a4");
+  const a4Width = 210;
+  const padding = 8;
+  const targetWidthMm = a4Width - 2 * padding;
+  const contentWidthPx = previewEl.offsetWidth;
+  if (!contentWidthPx) return;
+  const mmPerPx = targetWidthMm / contentWidthPx;
+  const xOffset = padding;
+  const yOffset = padding;
 
-    const previewContent = `
-  <div class="${PreviewStyles.personalInfo}">
- <h1>${dados.nome || "Seu Nome"}</h1>
- <p class="${PreviewStyles.jobTitle}">${dados.cargoDesejado || "Cargo Desejado"
-      }</p>
- <p class="${PreviewStyles.contactInfo}">
-  ${dados.email || "email@exemplo.com"}
-  <span class="${PreviewStyles.contactSeparator}"> | </span>
-  ${dados.telefone || "(00) 00000-0000"}
- </p>
- <div class="${PreviewStyles.contactLinks}">
-  ${dados.linkedin
-        ? `<a href="${dados.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>`
-        : ""
-      }
-  ${dados.github && dados.linkedin
-        ? `<span class="${PreviewStyles.contactSeparator}"> | </span>`
-        : ""
-      }
-  ${dados.github
-        ? `<a href="${dados.github}" target="_blank" rel="noopener noreferrer">GitHub</a>`
-        : ""
-      }
- </div>
-  </div>
-  ${dados.resumo
-        ? `<div class="${PreviewStyles.section}">
- <h3 class="${PreviewStyles.sectionTitle}">Resumo Profissional</h3>
- <p>${dados.resumo}</p>
-  </div>`
-        : ""
-      }
-  ${experiencias.length > 0
-        ? `<div class="${PreviewStyles.section}">
- <h3 class="${PreviewStyles.sectionTitle}">Experiências</h3>
- ${experiencias
-          .map(
-            (exp) => `<div class="${PreviewStyles.item}">
-  <p><strong>Empresa:</strong> ${exp.empresa}</p>
-  <p><strong>Cargo:</strong> ${exp.cargo}</p>
-  <p><strong>Descrição:</strong> ${exp.descricao}</p>
-  <p><strong>Período:</strong> ${exp.inicio} - ${exp.atual ? "Atual" : exp.fim
-              }</p>
- </div>`
-          )
-          .join("")}
-  </div>`
-        : ""
-      }
-  ${educacoes.length > 0
-        ? `<div class="${PreviewStyles.section}">
- <h3 class="${PreviewStyles.sectionTitle}">Educação</h3>
- ${educacoes
-          .map(
-            (ed) => `<div class="${PreviewStyles.item}">
-  <p><strong>Curso:</strong> ${ed.curso}</p>
-  <p><strong>Instituição:</strong> ${ed.instituicao}</p>
-  <p><strong>Período:</strong> ${ed.inicio} - ${ed.fim}</p>
- </div>`
-          )
-          .join("")}
-  </div>`
-        : ""
-      }
-  ${habilidadesHtml}
- `;
+  const headerElement = previewEl.querySelector(`.${PreviewStyles.header}`) as HTMLElement | null;
+  if (headerElement) headerElement.style.display = "none";
 
-    tempDiv.innerHTML = previewContent;
-    document.body.appendChild(tempDiv);
+  doc.html(previewEl, {
+    x: xOffset,
+    y: yOffset,
+    width: targetWidthMm,
+    windowWidth: contentWidthPx,
+    html2canvas: {
+      scale: 0.3,
+      useCORS: true,
+    },
+    callback: (doc) => {
+      try {
+        const links = previewEl.querySelectorAll("a, .contactRow span");
 
-    html2canvas(tempDiv, {
-      scale: 2,
-      backgroundColor: "#ffffff",
-    }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const doc = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        links.forEach((link) => {
+          let href = link.getAttribute("href") || link.textContent || "";
+          href = href.trim();
+          if (!href) return;
 
-      doc.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      doc.save("curriculo.pdf");
+          // Se for e-mail, adiciona mailto:
+          if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(href) && !href.startsWith("mailto:")) {
+            href = `mailto:${href}`;
+          }
+          // Se for link sem protocolo, adiciona https:
+          else if (!/^https?:\/\//i.test(href) && !href.startsWith("mailto:")) {
+            href = href.startsWith("www.") ? `https://${href}` : `https://${href}`;
+          }
 
-      document.body.removeChild(tempDiv);
-    });
-  };
+          const rect = link.getBoundingClientRect();
+          const previewRect = previewEl.getBoundingClientRect();
+
+          const relLeftPx = rect.left - previewRect.left;
+          const relTopPx = rect.top - previewRect.top;
+
+          const xMm = xOffset + relLeftPx * mmPerPx;
+          const yMm = yOffset + relTopPx * mmPerPx;
+          const wMm = rect.width * mmPerPx;
+          const hMm = rect.height * mmPerPx;
+
+          // Adiciona link clicável invisível
+          doc.link(xMm, yMm, Math.max(wMm, 1), Math.max(hMm, 1), { url: href });
+        });
+
+        doc.save("curriculo.pdf");
+      } finally {
+        if (headerElement) headerElement.style.display = "";
+      }
+    },
+  });
+};
+
 
   return (
     <>

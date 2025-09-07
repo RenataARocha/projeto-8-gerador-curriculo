@@ -98,7 +98,7 @@ p {
 .item p {
   position: relative;
   margin: 0 0 5px 0px;
-  
+
 }
 
 .item p strong {
@@ -119,8 +119,8 @@ p {
 }
 
 .descricao {
-  text-indent: -15px; /* Move a primeira linha 15px para a esquerda */
-  padding-left: 15px; /* Adiciona 30px de espaço à esquerda para compensar e alinhar o texto */
+  text-indent: -15px;
+  padding-left: 15px;/
 }
 
 
@@ -155,16 +155,24 @@ p {
   margin: 10px 0;
 }
 
-/* Mantenha o separador de texto das habilidades diferente da linha horizontal */
 .separator {
   color: #444444;
   font-weight: 600;
   padding: 0 5px;
 }
 
-/* ========================================= */
+.contactLinks span {
+  color: #0a66c2;
+  font-weight: bold;
+}
+
+.contactLinks span:hover {
+  text-decoration: underline;
+  cursor: default;
+}
+
+
 /* ESTILOS DE IMPRESSÃO - PARA O PDF FINAL */
-/* ========================================= */
 @media print {
   body {
     -webkit-print-color-adjust: exact;
@@ -172,48 +180,35 @@ p {
     margin: 0;
     padding: 0;
   }
-  
+
   .previewContainer {
-    font-family: Arial, Helvetica, sans-serif; /* Fonte clássica para documentos */
-    padding: 1cm; /* Margens de 1cm em cada lado */
-    width: 21cm; /* Largura de uma folha A4 */
-    min-height: 29.7cm; /* Altura de uma folha A4 */
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1cm;
+    width: 21cm;
+    min-height: 29.7cm;
     box-shadow: none;
     background-color: white;
     margin: 0 auto;
+    color: #000;
   }
 
-  /* Oculta elementos que não devem aparecer no PDF */
-  .header,
-  .main-content,
-  .form-container {
-    display: none !important;
+  /* Oculta o header no PDF */
+  .header {
+    display: none;
   }
 
-  /* Faz com que apenas o preview seja impresso */
-  .preview-container {
-    display: block !important;
-    position: relative;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    box-shadow: none;
-    border: none;
-  }
-
-  /* Ajusta as fontes e espaçamentos para o documento final */
+  /* Informações pessoais */
   .personalInfo {
     padding: 0;
     margin-bottom: 20px;
+    text-align: center;
   }
 
   .personalInfo h1 {
     font-size: 18pt;
     font-weight: bold;
     color: black;
+    margin-bottom: 5pt;
   }
 
   .jobTitle {
@@ -222,18 +217,46 @@ p {
     font-style: normal;
     margin-bottom: 10pt;
   }
-  
-  .contactInfo,
-  .contactLinks a {
+
+  /* --- CONTATO --- */
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
     font-size: 10pt;
     color: #444;
   }
 
+  .contactRow {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .contactLinks {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .contactLinks span {
+    color: #0a66c2;
+    font-weight: bold;
+  }
+
+  .contactLinks span:hover {
+    text-decoration: underline;
+    cursor: default;
+  }
+
+  /* --- SEÇÕES --- */
   .section {
     margin: 15pt 0;
   }
 
-  .sectionTitle {
+  .sectionTitle,
+  .sectionTitle1 {
     font-size: 14pt;
     font-weight: bold;
     margin-bottom: 5pt;
@@ -245,10 +268,19 @@ p {
     padding-left: 0;
     border-left: none;
   }
-  
+
   .item p {
     font-size: 10pt;
     line-height: 1.5;
+  }
+
+  .descricao {
+    padding-left: 30px;
+    text-indent: -15px;
+  }
+
+  .descricao strong::before {
+    left: 15px;
   }
 
   .habilidadesList {
@@ -259,6 +291,16 @@ p {
     font-size: 10pt;
     color: #444;
   }
+
+  .section,
+  .personalInfo {
+    page-break-inside: avoid;
+    /* evita quebra dentro da seção */
+    break-inside: avoid;
+  }
+
+  .section-large {
+    page-break-after: always;
+    /* força nova página após a seção */
+  }
 }
-
-
