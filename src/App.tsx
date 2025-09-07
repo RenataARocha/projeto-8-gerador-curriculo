@@ -44,7 +44,7 @@ function App() {
   const [openHabilidades, setOpenHabilidades] = useState(false);
 
   // 🔹 Adicionar habilidades
-  const adicionarHabilidade = (habilidadesString: string, nivel: String) => {
+  const adicionarHabilidade = (habilidadesString: string, nivel: string) => {
     if (!habilidadesString.trim()) return;
 
     const habilidadesDigitadas = habilidadesString.split(",").map((hab) => ({
