@@ -44,13 +44,13 @@ function App() {
   const [openHabilidades, setOpenHabilidades] = useState(false);
 
   // 🔹 Adicionar habilidades
-  const adicionarHabilidade = (habilidadesString: string) => {
+  const adicionarHabilidade = (habilidadesString: string, nivel: String) => {
     if (!habilidadesString.trim()) return;
 
     const habilidadesDigitadas = habilidadesString.split(",").map((hab) => ({
       id: Date.now() + Math.random(),
       nome: hab.trim(),
-      nivel: "Nenhum", // padrão
+      nivel: nivel, // padrão
     }));
 
     setListaDeHabilidades((listaAnterior) => [
