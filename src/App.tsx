@@ -22,7 +22,7 @@ export interface Habilidade {
 }
 
 function App() {
-  // 🔹 Estados principais
+  //  Estados principais
   const [dados, setDados] = useState<DadosPessoais>({
     nome: "",
     cargoDesejado: "",
@@ -38,12 +38,12 @@ function App() {
   const [listaDeHabilidades, setListaDeHabilidades] = useState<Habilidade[]>([]);
   const [habilidadeTemp, setHabilidadeTemp] = useState("");
 
-  // 🔹 Estados para controlar se as seções estão abertas
+  //  Estados para controlar se as seções estão abertas
   const [openExperiencias, setOpenExperiencias] = useState(false);
   const [openEducacao, setOpenEducacao] = useState(false);
   const [openHabilidades, setOpenHabilidades] = useState(false);
 
-  // 🔹 Adicionar habilidades
+  //  Adicionar habilidades
   const adicionarHabilidade = (habilidadesString: string, nivel: string) => {
     if (!habilidadesString.trim()) return;
 
@@ -60,7 +60,7 @@ function App() {
     setHabilidadeTemp("");
   };
 
-  // 🔹 Remover habilidade
+  //  Remover habilidade
   const removerHabilidade = (id: number) => {
     setListaDeHabilidades((listaAnterior) =>
       listaAnterior.filter((h) => h.id !== id)
@@ -69,7 +69,7 @@ function App() {
 
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // 🔹 Ref para os componentes de formulário
+  //  Ref para os componentes de formulário
   const dadosRef = useRef<{ resetForm: () => void }>(null);
   const experienciasRef = useRef<{ resetForm: () => void }>(null);
   const educacoesRef = useRef<{ resetForm: () => void }>(null);
@@ -90,14 +90,14 @@ function App() {
     setListaDeHabilidades([]);
     setHabilidadeTemp("");
 
-    // 🔹 Reseta formulários internos chamando os métodos expostos pelas refs
+    //  Reseta formulários internos chamando os métodos expostos pelas refs
     dadosRef.current?.resetForm();
     experienciasRef.current?.resetForm();
     educacoesRef.current?.resetForm();
     habilidadesRef.current?.resetForm();
   };
 
-  // 🔹 Exportar JSON
+  //  Exportar JSON
   const handleExportJSON = () => {
     const data = {
       dados,
@@ -116,49 +116,55 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
-  // 🔹 Exportar TXT
-  const handleExportTXT = () => {
-    const experienciasTxt = experiencias.length
-      ? experiencias
+  //  Exportar TXT
+const handleExportTXT = () => {
+  //  Nome do arquivo seguro
+  const nomeUsuario = dados.nome && dados.nome.trim() !== "" ? dados.nome : "curriculo";
+  const nomeArquivo = nomeUsuario
+    .trim()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-zA-Z0-9_]/g, "");
+
+  //  Experiências
+  const experienciasTxt = experiencias.length
+    ? experiencias
         .map(
           (exp, i) =>
-            `${i + 1}. Empresa: ${exp.empresa}\n Cargo: ${exp.cargo
-            }\n Descrição: ${exp.descricao}\n Período: ${exp.inicio} - ${exp.fim || "Atual"
-            }`
+            `${i + 1}. Empresa: ${exp.empresa}\n   Cargo: ${exp.cargo}\n   Descrição: ${exp.descricao}\n   Período: ${exp.inicio} - ${exp.fim || "Atual"}`
         )
         .join("\n\n")
-      : "Nenhuma experiência cadastrada";
+    : "Nenhuma experiência cadastrada";
 
-    const educacoesTxt = educacoes.length
-      ? educacoes
+  //  Educação
+  const educacoesTxt = educacoes.length
+    ? educacoes
         .map(
           (edu, i) =>
-            `${i + 1}. Curso: ${edu.curso}\n Instituição: ${edu.instituicao
-            }\n Período: ${edu.inicio} - ${edu.fim}`
+            `${i + 1}. Curso: ${edu.curso}\n   Instituição: ${edu.instituicao}\n   Período: ${edu.inicio} - ${edu.fim}`
         )
         .join("\n\n")
-      : "Nenhuma educação cadastrada";
+    : "Nenhuma educação cadastrada";
 
-    const habilidadesTxt = listaDeHabilidades.length
-      ? listaDeHabilidades
+  //  Habilidades
+  const habilidadesTxt = listaDeHabilidades.length
+    ? listaDeHabilidades
         .map(
-          (h, i) =>
-            `${i + 1}. ${h.nome} ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""
-            }`
+          (h, i) => `${i + 1}. ${h.nome} ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""}`
         )
         .join("\n")
-      : "Nenhuma habilidade cadastrada";
+    : "Nenhuma habilidade cadastrada";
 
-    const content = `
-Nome: ${dados.nome}
-Cargo Desejado: ${dados.cargoDesejado}
-Email: ${dados.email}
-Telefone: ${dados.telefone}
-LinkedIn: ${dados.linkedin}
-GitHub: ${dados.github}
+  //  Conteúdo completo
+  const content = `
+Nome: ${dados.nome || "Seu Nome"}
+Cargo Desejado: ${dados.cargoDesejado || "-"}
+Email: ${dados.email || "-"}
+Telefone: ${dados.telefone || "-"}
+LinkedIn: ${dados.linkedin || "-"}
+GitHub: ${dados.github || "-"}
 
 Resumo:
-${dados.resumo}
+${dados.resumo || "-"}
 
 Habilidades:
 ${habilidadesTxt}
@@ -170,83 +176,109 @@ Educação:
 ${educacoesTxt}
 `;
 
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "curriculo.txt";
-    link.click();
-    URL.revokeObjectURL(url);
-  };
+  //  Cria blob e faz download com nome do usuário
+  const blob = new Blob([content], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${nomeArquivo}.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
 
-  // 🔹 Exportar Word
-  const handleExportWord = () => {
-    const experienciasHtml = experiencias.length
-      ? experiencias
+
+
+//  Exportar WORD
+const handleExportWord = () => {
+  //  Nome do arquivo seguro
+  const nomeUsuario = dados.nome && dados.nome.trim() !== "" ? dados.nome : "curriculo";
+  const nomeArquivo = nomeUsuario
+    .trim()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-zA-Z0-9_]/g, "");
+
+  //  Experiências
+  const experienciasHtml = experiencias.length
+    ? experiencias
         .map(
           (exp) =>
-            `<li>Empresa: ${exp.empresa} | Cargo: ${exp.cargo} | Descrição: ${exp.descricao
-            } | Período: ${exp.inicio} - ${exp.fim || "Atual"}</li>`
+            `<li><b>Empresa:</b> ${exp.empresa} | <b>Cargo:</b> ${exp.cargo} | <b>Descrição:</b> ${exp.descricao} | <b>Período:</b> ${exp.inicio} - ${exp.fim || "Atual"}</li>`
         )
         .join("")
-      : "<li>Nenhuma experiência cadastrada</li>";
+    : "<li>Nenhuma experiência cadastrada</li>";
 
-    const educacoesHtml = educacoes.length
-      ? educacoes
+  //  Educação
+  const educacoesHtml = educacoes.length
+    ? educacoes
         .map(
           (edu) =>
-            `<li>Curso: ${edu.curso} | Instituição: ${edu.instituicao} | Período: ${edu.inicio} - ${edu.fim}</li>`
+            `<li><b>Curso:</b> ${edu.curso} | <b>Instituição:</b> ${edu.instituicao} | <b>Período:</b> ${edu.inicio} - ${edu.fim}</li>`
         )
         .join("")
-      : "<li>Nenhuma educação cadastrada</li>";
+    : "<li>Nenhuma educação cadastrada</li>";
 
-    const habilidadesHtml = listaDeHabilidades.length
-      ? `<ul>${listaDeHabilidades
+  //  Habilidades
+  const habilidadesHtml = listaDeHabilidades.length
+    ? listaDeHabilidades
         .map(
           (h) =>
-            `<li>${h.nome} ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""
-            }</li>`
+            `<li><b>${h.nome}</b> ${h.nivel !== "Nenhum" ? `(${h.nivel})` : ""}</li>`
         )
-        .join("")}</ul>`
-      : "<p>Nenhuma habilidade cadastrada</p>";
+        .join("")
+    : "<li>Nenhuma habilidade cadastrada</li>";
 
-    const htmlContent = `
+  //  Conteúdo HTML completo com estilos inline
+  const htmlContent = `
 <html>
 <head><meta charset="UTF-8"><title>Currículo</title></head>
-<body>
-<h1>${dados.nome}</h1>
-<h2>${dados.cargoDesejado}</h2>
-<p>Email: ${dados.email}</p>
-<p>Telefone: ${dados.telefone}</p>
-<p>LinkedIn: ${dados.linkedin}</p>
-<p>GitHub: ${dados.github}</p>
-<h3>Resumo</h3>
-<p>${dados.resumo}</p>
-<h3>Habilidades</h3>
+<body style="font-family: Arial, sans-serif; color:#333;">
+<h1 style="color:#333; font-size:24px;">${dados.nome || "Seu Nome"}</h1>
+<h2 style="color:#555; font-size:18px;">${dados.cargoDesejado || "Cargo Desejado"}</h2>
+
+<p><b>Email:</b> ${dados.email || "-"}</p>
+<p><b>Telefone:</b> ${dados.telefone || "-"}</p>
+<p><b>LinkedIn:</b> ${dados.linkedin || "-"}</p>
+<p><b>GitHub:</b> ${dados.github || "-"}</p>
+
+<h3 style="color:#333; margin-top:20px;">Resumo</h3>
+<p>${dados.resumo || "Nenhum resumo cadastrado."}</p>
+
+<h3 style="color:#333; margin-top:20px;">Habilidades</h3>
+<ul style="list-style-type: disc; padding-left: 20px; color:#444;">
 ${habilidadesHtml}
-<h3>Experiências</h3>
-<ul>
+</ul>
+
+<h3 style="color:#333; margin-top:20px;">Experiências</h3>
+<ul style="list-style-type: disc; padding-left: 20px; color:#444;">
 ${experienciasHtml}
 </ul>
-<h3>Educação</h3>
-<ul>
+
+<h3 style="color:#333; margin-top:20px;">Educação</h3>
+<ul style="list-style-type: disc; padding-left: 20px; color:#444;">
 ${educacoesHtml}
 </ul>
 </body>
 </html>
 `;
 
-    const blob = new Blob([htmlContent], { type: "application/msword" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "curriculo.doc";
-    link.click();
-    URL.revokeObjectURL(url);
-  };
+  //  Cria blob e faz download com nome correto
+  const blob = new Blob([htmlContent], { type: "application/msword" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${nomeArquivo}.doc`; // nome do usuário
+  document.body.appendChild(link); // adiciona no DOM para o navegador respeitar o download
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
 
 
-  // 🔹 Exportar PDF
+  //  Exportar PDF
   const handleExportPDF = () => {
   const previewEl = previewRef.current as HTMLElement | null;
   if (!previewEl) return;
