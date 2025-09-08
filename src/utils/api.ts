@@ -1,6 +1,8 @@
+const BASE_URL = "/api";
+
 export const melhorarTexto = async (texto: string) => {
   try {
-    const res = await fetch("http://localhost:3000/api/melhorar-texto", {
+    const res = await fetch(`${BASE_URL}/melhorar-texto`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ texto }),
