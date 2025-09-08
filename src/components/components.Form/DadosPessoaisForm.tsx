@@ -4,6 +4,21 @@ import styles from "./DadosPessoaisForm.module.css";
 import toast from "react-hot-toast";
 import { melhorarTexto } from "../../utils/api";
 
+// 🔹 Função para formatar o telefone
+function formatarTelefone(valor: string): string {
+  const numeros = valor.replace(/\D/g, ""); // só números
+
+  if (numeros.length <= 10) {
+    return numeros
+      .replace(/^(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{4})(\d)/, "$1-$2");
+  } else {
+    return numeros
+      .replace(/^(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d)/, "$1-$2");
+  }
+}
+
 // Componente CampoResumo
 interface CampoResumoProps {
   value: string;
@@ -40,10 +55,9 @@ function CampoResumo({ value, onChange, label }: CampoResumoProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={5}
-        className={`${styles.floatingLabel} ${styles.resumoField} ${value ? styles.active : ""
-          }`}
+        className={`${styles.floatingLabel} ${styles.resumoField} ${value ? styles.active : ""}`}
         data-placeholder={label}
-        disabled={loading} // 🔹 desabilita enquanto carrega
+        disabled={loading}
       />
       <button
         type="button"
@@ -127,8 +141,7 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
 
       {/* Cargo Desejado */}
       <label
-        className={`${styles.floatingLabel} ${dados.cargoDesejado ? styles.active : ""
-          }`}
+        className={`${styles.floatingLabel} ${dados.cargoDesejado ? styles.active : ""}`}
         data-placeholder="Cargo Desejado"
       >
         <input
@@ -171,7 +184,9 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
         <input
           type="tel"
           value={dados.telefone}
-          onChange={(e) => setDados({ ...dados, telefone: e.target.value })}
+          onChange={(e) =>
+            setDados({ ...dados, telefone: formatarTelefone(e.target.value) })
+          }
           onBlur={() => setTouched((s) => ({ ...s, telefone: true }))}
           required
         />
