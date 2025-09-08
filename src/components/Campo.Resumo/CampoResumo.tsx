@@ -27,11 +27,8 @@ export function CampoResumo({ value, onChange, label }: CampoResumoProps) {
                 .replace(/^#+\s*/gm, "")
                 .replace(/\*\*/g, "")
                 .replace(/-\s*/g, "")
-                .replace(/\n+/g, " | ")
-                .replace(/\s*\|\s*/g, " | ")
-                .replace(/^\s*\|\s*/, "")
-                .replace(/\s*\|\s*$/, "")
                 .trim();
+            onChange(resultadoLimpo);
 
             onChange(resultadoLimpo);
             toast.success("Texto melhorado com sucesso!");

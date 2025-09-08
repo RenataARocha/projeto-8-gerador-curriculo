@@ -61,19 +61,19 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
       try {
         const resultado = await melhorarTexto(habilidadeTemp);
 
-        // Limpeza automática
-        const resultadoLimpo = resultado
-          .replace(/^#+\s*/gm, "")
-          .replace(/\*\*/g, "")
-          .replace(/-\s*/g, "")
-          .replace(/\n+/g, " | ")
-          .replace(/\s*\|\s*/g, " | ")
-          .replace(/^\s*\|\s*/, "")
-          .replace(/\s*\|\s*$/, "")
-          .trim();
+        // Limpeza automática para extrair apenas a lista de habilidades
+        const resultadoProcessado = resultado
+            // Remove títulos como "Habilidades e Competências em..."
+            .replace(/Habilidades.*|Vamos juntos.*|Essas habilidades.*/gi, "")
+            // Remove as categorias (ex: "Linguagens e Tecnologias:")
+            .replace(/.*:\s*/g, "")
+            // Transforma quebras de linha e barras em um único separador
+            .replace(/[\n|]+/g, ",")
+            // Remove o último separador se houver
+            .replace(/,\s*$/, "")
+            .trim();
 
-
-        setHabilidadeTemp(resultadoLimpo);
+        setHabilidadeTemp(resultadoProcessado);
         toast.success("Habilidade melhorada com sucesso!");
       } catch (err) {
         console.error(err);
