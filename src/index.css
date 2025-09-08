@@ -32,6 +32,8 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 130vh; 
+  overflow-y: auto; 
 }
 
 /* Área da prévia */
