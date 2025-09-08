@@ -25,7 +25,6 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
     const [habilidadeTempLevel, setHabilidadeTempLevel] = useState<string>("Básico");
     const [loading, setLoading] = useState(false);
 
-    // Expõe método reset para o pai
     useImperativeHandle(ref, () => ({
       resetForm() {
         setHabilidadeTemp("");
@@ -51,7 +50,7 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
       }
     };
 
-    // Nova função para melhorar a habilidade com IA
+    // Função melhorada
     const handleMelhorar = async () => {
       if (!habilidadeTemp.trim()) {
         toast.error("O campo de habilidade está vazio!");
@@ -61,7 +60,16 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
       setLoading(true);
       try {
         const resultado = await melhorarTexto(habilidadeTemp);
-        setHabilidadeTemp(resultado);
+
+        // Limpeza automática
+        const resultadoLimpo = resultado
+          .replace(/\*\*/g, "")        // remove asteriscos
+          .replace(/- /g, "")          // remove "-"
+          .replace(/\n+/g, " | ")      // quebras de linha viram "|"
+          .replace(/\s+\|\s+/g, " | ") // remove espaços extras
+          .trim();
+
+        setHabilidadeTemp(resultadoLimpo);
         toast.success("Habilidade melhorada com sucesso!");
       } catch (err) {
         console.error(err);
@@ -101,7 +109,6 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
               <option value="Avançado">Avançado</option>
             </select>
 
-            {/* Botão de melhorar habilidade */}
             <button
               type="button"
               className={styles.melhorarButton}
@@ -116,7 +123,6 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
         {habilidades.length > 0 && (
           <>
             <h3 className={styles.listaTitulo}>Habilidades Adicionadas:</h3>
-
             <ul className={styles.habilidadesList}>
               {habilidades.map((hab) => (
                 <li key={hab.id} className={styles.habilidadeItem}>
