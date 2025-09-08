@@ -1,4 +1,6 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
+import toast from "react-hot-toast";
+import { melhorarTexto } from "../../utils/api";
 import styles from "./ListaHabilidades.module.css";
 
 export interface Habilidade {
@@ -21,6 +23,7 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
   ({ habilidades, adicionarHabilidade, removerHabilidade, habilidadeTemp, setHabilidadeTemp }, ref) => {
     const [mostrarForm, setMostrarForm] = useState(false);
     const [habilidadeTempLevel, setHabilidadeTempLevel] = useState<string>("Básico");
+    const [loading, setLoading] = useState(false);
 
     // Expõe método reset para o pai
     useImperativeHandle(ref, () => ({
@@ -45,6 +48,26 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
         setMostrarForm(false);
         setHabilidadeTemp("");
         setHabilidadeTempLevel("Básico");
+      }
+    };
+
+    // Nova função para melhorar a habilidade com IA
+    const handleMelhorar = async () => {
+      if (!habilidadeTemp.trim()) {
+        toast.error("O campo de habilidade está vazio!");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const resultado = await melhorarTexto(habilidadeTemp);
+        setHabilidadeTemp(resultado);
+        toast.success("Habilidade melhorada com sucesso!");
+      } catch (err) {
+        console.error(err);
+        toast.error("Erro ao melhorar habilidade.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -77,6 +100,16 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
               <option value="Intermediário">Intermediário</option>
               <option value="Avançado">Avançado</option>
             </select>
+
+            {/* Botão de melhorar habilidade */}
+            <button
+              type="button"
+              className={styles.melhorarButton}
+              onClick={handleMelhorar}
+              disabled={loading}
+            >
+              {loading ? "Melhorando..." : "Melhorar"}
+            </button>
           </div>
         )}
 
@@ -84,7 +117,6 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
           <>
             <h3 className={styles.listaTitulo}>Habilidades Adicionadas:</h3>
 
-            {/* Lista das habilidades */}
             <ul className={styles.habilidadesList}>
               {habilidades.map((hab) => (
                 <li key={hab.id} className={styles.habilidadeItem}>
