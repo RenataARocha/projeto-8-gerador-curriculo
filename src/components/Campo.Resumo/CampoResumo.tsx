@@ -24,16 +24,14 @@ export function CampoResumo({ value, onChange, label }: CampoResumoProps) {
 
             // Remove os ** do Markdown e mantém a quebra de parágrafos
             const resultadoLimpo = resultado
-                .replace(/\*\*/g, "") // remove os asteriscos
-                // transforma listas "-" em " | ", mas mantém títulos separados
-                .replace(/-\s+/g, " | ")
-                // mantém títulos (palavra + ":") separados por quebra de linha
-                .replace(/([^\|]\:)\s*\|/g, "$1\n")
-                // remove múltiplos espaços e pipes consecutivos
+                .replace(/^#+\s*/gm, "")
+                .replace(/\*\*/g, "")
+                .replace(/-\s*/g, "")
+                .replace(/\n+/g, " | ")
                 .replace(/\s*\|\s*/g, " | ")
-                .replace(/\n{2,}/g, "\n")
+                .replace(/^\s*\|\s*/, "")
+                .replace(/\s*\|\s*$/, "")
                 .trim();
-
 
             onChange(resultadoLimpo);
             toast.success("Texto melhorado com sucesso!");

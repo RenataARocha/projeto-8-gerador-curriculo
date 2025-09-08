@@ -63,11 +63,15 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
 
         // Limpeza automática
         const resultadoLimpo = resultado
-          .replace(/\*\*/g, "")        // remove asteriscos
-          .replace(/- /g, "")          // remove "-"
-          .replace(/\n+/g, " | ")      // quebras de linha viram "|"
-          .replace(/\s+\|\s+/g, " | ") // remove espaços extras
+          .replace(/^#+\s*/gm, "")
+          .replace(/\*\*/g, "")
+          .replace(/-\s*/g, "")
+          .replace(/\n+/g, " | ")
+          .replace(/\s*\|\s*/g, " | ")
+          .replace(/^\s*\|\s*/, "")
+          .replace(/\s*\|\s*$/, "")
           .trim();
+
 
         setHabilidadeTemp(resultadoLimpo);
         toast.success("Habilidade melhorada com sucesso!");
@@ -98,17 +102,18 @@ const ListaHabilidades = forwardRef<{ resetForm: () => void }, ListaHabilidadesP
               placeholder="Ex: HTML, CSS, JavaScript"
               value={habilidadeTemp}
               onChange={(e) => setHabilidadeTemp(e.target.value)}
+              disabled={loading} // 🔹 bloqueia enquanto carrega
             />
             <select
               value={habilidadeTempLevel}
               onChange={(e) => setHabilidadeTempLevel(e.target.value)}
+              disabled={loading} // 🔹 bloqueia enquanto carrega
             >
               <option value="Nenhum">Nenhum</option>
               <option value="Básico">Básico</option>
               <option value="Intermediário">Intermediário</option>
               <option value="Avançado">Avançado</option>
             </select>
-
             <button
               type="button"
               className={styles.melhorarButton}

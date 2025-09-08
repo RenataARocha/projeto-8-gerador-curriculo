@@ -40,10 +40,10 @@ function CampoResumo({ value, onChange, label }: CampoResumoProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         rows={5}
-        className={`${styles.floatingLabel} ${styles.resumoField} ${
-          value ? styles.active : ""
-        }`}
+        className={`${styles.floatingLabel} ${styles.resumoField} ${value ? styles.active : ""
+          }`}
         data-placeholder={label}
+        disabled={loading} // 🔹 desabilita enquanto carrega
       />
       <button
         type="button"
@@ -127,9 +127,8 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
 
       {/* Cargo Desejado */}
       <label
-        className={`${styles.floatingLabel} ${
-          dados.cargoDesejado ? styles.active : ""
-        }`}
+        className={`${styles.floatingLabel} ${dados.cargoDesejado ? styles.active : ""
+          }`}
         data-placeholder="Cargo Desejado"
       >
         <input

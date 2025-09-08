@@ -100,14 +100,19 @@ const ListaExperiencias = forwardRef<{ resetForm: () => void }, ListaExperiencia
                 placeholder="Descrição das atividades"
                 value={exp.descricao}
                 onChange={(e) => updateExperiencia(exp.id, "descricao", e.target.value)}
+                disabled={loadingIds.includes(exp.id)} // desabilita durante o loading
               />
               <button
                 type="button"
-                className={styles.addButton} 
+                className={styles.addButton}
                 onClick={() => handleMelhorarDescricao(exp)}
-                disabled={loadingIds.includes(exp.id)}
+                disabled={loadingIds.includes(exp.id)} // botão desabilitado enquanto carrega
               >
-                {loadingIds.includes(exp.id) ? "Melhorando..." : "Melhorar"}
+                {loadingIds.includes(exp.id) ? (
+                  <span className={styles.spinner}></span> // spinner dentro do botão
+                ) : (
+                  "Melhorar"
+                )}
               </button>
               <div className={styles.dateFields}>
                 <label>
