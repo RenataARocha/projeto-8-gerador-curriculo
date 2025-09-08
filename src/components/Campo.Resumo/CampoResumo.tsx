@@ -20,8 +20,21 @@ export function CampoResumo({ value, onChange, label }: CampoResumoProps) {
 
     setLoading(true);
     try {
-      const resultado = await melhorarTexto(value);
-      onChange(resultado);
+      // Dividir o texto em parágrafos
+      const paragrafos = value.split(/\n+/).filter(p => p.trim() !== "");
+
+      // Reescrever cada parágrafo
+      const respostas = await Promise.all(
+        paragrafos.map(async (p) => {
+          const reescrito = await melhorarTexto(p);
+          return reescrito;
+        })
+      );
+
+      // Juntar tudo novamente
+      const resultadoFinal = respostas.join("\n\n");
+
+      onChange(resultadoFinal);
       toast.success("Texto melhorado com sucesso!");
     } catch (err) {
       console.error("Erro ao melhorar resumo:", err);
@@ -44,7 +57,7 @@ export function CampoResumo({ value, onChange, label }: CampoResumoProps) {
       <button
         onClick={handleMelhorar}
         disabled={loading}
-        className={styles.botaoMelhorar} 
+        className={styles.botaoMelhorar}
       >
         {loading ? "Melhorando..." : "Melhorar"}
       </button>

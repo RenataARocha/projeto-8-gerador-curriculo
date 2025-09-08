@@ -6,9 +6,9 @@ export const melhorarTexto = async (texto: string) => {
       body: JSON.stringify({ texto }),
     });
     const data = await res.json();
-    return data.resultado;
+    return data.resultado; // retorna string reescrita
   } catch (error) {
     console.error(error);
-    return texto; // fallback: retorna texto original
+    return texto; // fallback: mantém o texto original
   }
 };

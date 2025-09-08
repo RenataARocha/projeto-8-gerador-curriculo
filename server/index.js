@@ -9,23 +9,38 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.post("/api/melhorar-texto", async (req, res) => {
   try {
     const { texto } = req.body;
 
-    const response = await openai.chat.completions.create({
+    if (!texto || texto.trim().length === 0) {
+      return res.json({ resultado: texto });
+    }
+
+    // Prompt mais agressivo para reescrever texto
+    const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "Você é um assistente que melhora textos." },
-        { role: "user", content: `Melhore o seguinte texto: ${texto}` },
+        {
+          role: "system",
+          content:
+            "Você é um assistente que reescreve textos para deixá-los claros, envolventes, persuasivos e profissionais."
+        },
+        {
+          role: "user",
+          content: `Reescreva este texto de forma mais clara, envolvente e persuasiva. 
+Use frases mais curtas, melhore a pontuação e estilo, substitua palavras repetidas e organize o conteúdo para que fique mais impactante, mantendo o sentido original:\n\n${texto}`
+        }
       ],
+      temperature: 0.9,
+      max_tokens: 800
     });
 
-    res.json({ resultado: response.choices?.[0]?.message?.content ?? "" });
+    const resultado = completion.choices?.[0]?.message?.content?.trim() || texto;
+
+    res.json({ resultado });
   } catch (error) {
     console.error(error);
     res.status(500).json({ erro: error.message || "Erro no servidor" });
