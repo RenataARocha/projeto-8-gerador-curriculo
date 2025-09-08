@@ -10,6 +10,7 @@ import Header from "./components/components.Header/Header";
 
 import type { DadosPessoais, Experiencia } from "./components/types/types";
 import type { Educacao } from "./components/components.Educacao/ListaEducacao";
+import { Toaster } from "react-hot-toast"; 
 
 import PreviewStyles from "./components/Preview/Preview.module.css"
 import jsPDF from "jspdf";
@@ -349,64 +350,68 @@ ${educacoesHtml}
 };
 
   return (
-    <>
-      <Header />
-      <div className="main-content">
-        <form className="form-container">
-          <DadosPessoaisForm dados={dados} setDados={setDados} ref={dadosRef} />
+  <>
+    {/* 🔹 Ativa os toasts globais */}
+    <Toaster position="top-right" reverseOrder={false} />
 
-          <div className="section-wrapper">
-            <ListaExperiencias
-              onChange={setExperiencias}
-              open={openExperiencias}
-              setOpen={setOpenExperiencias}
-              ref={experienciasRef}
-            />
-          </div>
+    <Header />
+    <div className="main-content">
+      <form className="form-container">
+        <DadosPessoaisForm dados={dados} setDados={setDados} ref={dadosRef} />
 
-          <div className="section-wrapper">
-            <ListaEducacao
-              onChange={setEducacoes}
-              open={openEducacao}
-              setOpen={setOpenEducacao}
-              ref={educacoesRef}
-            />
-          </div>
-
-          <div className="section-wrapper">
-            <ListaHabilidades
-              habilidades={listaDeHabilidades}
-              removerHabilidade={removerHabilidade}
-              habilidadeTemp={habilidadeTemp}
-              setHabilidadeTemp={setHabilidadeTemp}
-              adicionarHabilidade={adicionarHabilidade}
-              open={openHabilidades}
-              setOpen={setOpenHabilidades}
-              ref={habilidadesRef}
-            />
-          </div>
-
-          <ExportButtons
-            onExportPDF={handleExportPDF}
-            onExportWord={handleExportWord}
-            onExportTXT={handleExportTXT}
-            onExportJSON={handleExportJSON}
-            onClearAll={handleClearAll}
-          />
-        </form>
-
-        <div className="preview-container" ref={previewRef}>
-          <Preview
-            dados={dados}
-            experiencias={experiencias}
-            educacoes={educacoes}
-            listaDeHabilidades={listaDeHabilidades}
-            habilidadeTemp={habilidadeTemp}
+        <div className="section-wrapper">
+          <ListaExperiencias
+            onChange={setExperiencias}
+            open={openExperiencias}
+            setOpen={setOpenExperiencias}
+            ref={experienciasRef}
           />
         </div>
+
+        <div className="section-wrapper">
+          <ListaEducacao
+            onChange={setEducacoes}
+            open={openEducacao}
+            setOpen={setOpenEducacao}
+            ref={educacoesRef}
+          />
+        </div>
+
+        <div className="section-wrapper">
+          <ListaHabilidades
+            habilidades={listaDeHabilidades}
+            removerHabilidade={removerHabilidade}
+            habilidadeTemp={habilidadeTemp}
+            setHabilidadeTemp={setHabilidadeTemp}
+            adicionarHabilidade={adicionarHabilidade}
+            open={openHabilidades}
+            setOpen={setOpenHabilidades}
+            ref={habilidadesRef}
+          />
+        </div>
+
+        <ExportButtons
+          onExportPDF={handleExportPDF}
+          onExportWord={handleExportWord}
+          onExportTXT={handleExportTXT}
+          onExportJSON={handleExportJSON}
+          onClearAll={handleClearAll}
+        />
+      </form>
+
+      <div className="preview-container" ref={previewRef}>
+        <Preview
+          dados={dados}
+          experiencias={experiencias}
+          educacoes={educacoes}
+          listaDeHabilidades={listaDeHabilidades}
+          habilidadeTemp={habilidadeTemp}
+        />
       </div>
-    </>
-  );
+    </div>
+  </>
+);
+
 }
 
 export default App;

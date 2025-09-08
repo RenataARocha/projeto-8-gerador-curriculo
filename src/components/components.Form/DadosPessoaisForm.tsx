@@ -1,6 +1,8 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 import type { DadosPessoais } from "../types/types";
 import styles from "./DadosPessoaisForm.module.css";
+import { CampoResumo } from "../Campo.Resumo/CampoResumo";
+
 
 type Props = {
   dados: DadosPessoais;
@@ -8,7 +10,6 @@ type Props = {
 };
 
 const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
-  const maxResumo = 1000;
 
   const [touched, setTouched] = useState({
     nome: false,
@@ -149,15 +150,14 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
       </label>
 
       {/* Resumo */}
-      <textarea
-        className={`${styles.floatingLabel} ${styles.resumoField} ${dados.resumo ? styles.active : ""
-          }`}
+      <CampoResumo
+        className={styles.resumoField}
+        label="Resumo Profissional"
         value={dados.resumo}
-        maxLength={maxResumo}
-        onChange={(e) => setDados({ ...dados, resumo: e.target.value })}
-        placeholder="Digite um tópico por linha para o resumo profissional"
-        rows={5}
+        onChange={(novoValor) => setDados({ ...dados, resumo: novoValor })}
       />
+
+
     </form>
   );
 });
