@@ -1,16 +1,78 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 import type { DadosPessoais } from "../types/types";
 import styles from "./DadosPessoaisForm.module.css";
-import { CampoResumo } from "../Campo.Resumo/CampoResumo";
+import toast from "react-hot-toast";
+import { melhorarTexto } from "../../utils/api";
 
+// Componente CampoResumo
+interface CampoResumoProps {
+  value: string;
+  onChange: (novoValor: string) => void;
+  label?: string;
+}
 
+function CampoResumo({ value, onChange, label }: CampoResumoProps) {
+  const [loading, setLoading] = useState(false);
+
+  const handleMelhorar = async () => {
+    if (!value.trim()) {
+      toast.error("O campo está vazio!");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const resultado = await melhorarTexto(value);
+      onChange(resultado);
+      toast.success("Texto melhorado com sucesso!");
+    } catch (err) {
+      console.error("Erro ao melhorar resumo:", err);
+      toast.error("Erro ao melhorar resumo.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.resumoField}>
+      {label && <label className={styles.floatingLabel}>{label}</label>}
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={5}
+        className={`${styles.floatingLabel} ${styles.resumoField} ${
+          value ? styles.active : ""
+        }`}
+        data-placeholder={label}
+      />
+      <button
+        type="button"
+        onClick={handleMelhorar}
+        disabled={loading}
+        className={styles.botaoMelhorar}
+        style={{
+          marginTop: "8px",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          border: "none",
+          backgroundColor: "#ff4b9b",
+          color: "#fff",
+          cursor: loading ? "not-allowed" : "pointer",
+        }}
+      >
+        {loading ? "Melhorando..." : "Melhorar"}
+      </button>
+    </div>
+  );
+}
+
+// Componente principal do formulário
 type Props = {
   dados: DadosPessoais;
   setDados: React.Dispatch<React.SetStateAction<DadosPessoais>>;
 };
 
 const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
-
   const [touched, setTouched] = useState({
     nome: false,
     email: false,
@@ -22,11 +84,7 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
 
   useImperativeHandle(ref, () => ({
     resetForm() {
-      setTouched({
-        nome: false,
-        email: false,
-        telefone: false,
-      });
+      setTouched({ nome: false, email: false, telefone: false });
       setDados({
         nome: "",
         cargoDesejado: "",
@@ -69,16 +127,15 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
 
       {/* Cargo Desejado */}
       <label
-        className={`${styles.floatingLabel} ${dados.cargoDesejado ? styles.active : ""
-          }`}
+        className={`${styles.floatingLabel} ${
+          dados.cargoDesejado ? styles.active : ""
+        }`}
         data-placeholder="Cargo Desejado"
       >
         <input
           type="text"
           value={dados.cargoDesejado || ""}
-          onChange={(e) =>
-            setDados({ ...dados, cargoDesejado: e.target.value })
-          }
+          onChange={(e) => setDados({ ...dados, cargoDesejado: e.target.value })}
         />
       </label>
 
@@ -126,8 +183,7 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
 
       {/* LinkedIn */}
       <label
-        className={`${styles.floatingLabel} ${dados.linkedin ? styles.active : ""
-          }`}
+        className={`${styles.floatingLabel} ${dados.linkedin ? styles.active : ""}`}
         data-placeholder="LinkedIn (opcional)"
       >
         <input
@@ -149,15 +205,12 @@ const DadosPessoaisForm = forwardRef(({ dados, setDados }: Props, ref) => {
         />
       </label>
 
-      {/* Resumo */}
+      {/* Resumo Profissional */}
       <CampoResumo
-        className={styles.resumoField}
-        label="Resumo Profissional"
         value={dados.resumo}
         onChange={(novoValor) => setDados({ ...dados, resumo: novoValor })}
+        label="Resumo Profissional"
       />
-
-
     </form>
   );
 });
