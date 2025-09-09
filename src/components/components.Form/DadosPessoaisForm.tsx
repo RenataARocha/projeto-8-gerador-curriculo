@@ -64,15 +64,6 @@ function CampoResumo({ value, onChange, label }: CampoResumoProps) {
         onClick={handleMelhorar}
         disabled={loading}
         className={styles.botaoMelhorar}
-        style={{
-          marginTop: "8px",
-          padding: "0.5rem 1rem",
-          borderRadius: "0.5rem",
-          border: "none",
-          backgroundColor: "#ff4b9b",
-          color: "#fff",
-          cursor: loading ? "not-allowed" : "pointer",
-        }}
       >
         {loading ? "Melhorando..." : "Melhorar"}
       </button>

@@ -85,27 +85,6 @@
   align-items: flex-start;
 }
 
-/* Botão Melhorar descrição */
-.botaoMelhorar {
-  padding: 6px 12px;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background 0.2s;
-}
-
-.botaoMelhorar:hover {
-  background-color: #4338ca;
-}
-
-.botaoMelhorar:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 /* CAMPOS DE DATA */
 .dateFields {
   display: flex;
@@ -139,8 +118,9 @@
 }
 
 /* Estilos para o botão Adicionar experiência */
-.addButton {
-  background: #ff6a95;
+.addButton,
+.salvarButton {
+  background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129));
   color: white;
   border: none;
   padding: 10px;
@@ -148,15 +128,34 @@
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   width: 100%;
   margin-top: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.addButton:hover {
-  background: #e05580;
+.addButton:hover,
+.salvarButton:hover {
+  background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129), #ff6a95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3);
 }
 
-.experienciaItem .addButton {
-  margin-top: 10px;
+/* Efeito adicional de brilho no hover (opcional) */
+.addButton::before,
+.salvarButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.addButton:hover::before,
+.salvarButton:hover::before {
+  left: 100%;
 }

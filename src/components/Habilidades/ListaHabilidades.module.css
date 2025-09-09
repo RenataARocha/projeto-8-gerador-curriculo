@@ -39,8 +39,10 @@
   border-color: #ff6a95;
 }
 
-.adicionarButton, .salvarButton {
-   background: #ff6a95;
+.adicionarButton,
+.salvarButton,
+.melhorarButton {
+  background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129));
   color: white;
   border: none;
   padding: 10px;
@@ -48,13 +50,39 @@
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   width: 100%;
   margin-top: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.salvarButton:hover, .adicionarButton:hover {
-  background: #e05580;
+.adicionarButton:hover,
+.salvarButton:hover,
+.melhorarButton:hover {
+  background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129), #ff6a95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3);
+}
+
+/* Efeito adicional de brilho no hover (opcional) */
+.adicionarButton::before,
+.salvarButton::before,
+.melhorarButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.adicionarButton:hover::before,
+.salvarButton:hover::before,
+.melhorarButton:hover::before {
+  left: 100%;
 }
 
 /* Lista de habilidades */
@@ -125,21 +153,3 @@
   text-decoration: underline;
   color: #e05580;
 }
-
-.melhorarButton {
-  background: #ff6a95;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 15px;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
-}
-
-.melhorarButton:hover {
-  background: #e05580;
-}
-

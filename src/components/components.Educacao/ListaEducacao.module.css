@@ -76,25 +76,6 @@
   text-decoration: underline;
 }
 
-/* BOTÃO ADICIONAR EDUCAÇÃO */
-.addButton {
-  background: #ff6a95;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 15px;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.addButton:hover {
-  background: #e05580;
-}
-
 /* Cabeçalho do item */
 .headerItem {
   display: flex;
@@ -130,4 +111,44 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+}
+
+
+/* BOTÃO ADICIONAR EDUCAÇÃO */
+.addButton {
+  background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129));
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.addButton:hover {
+  background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129), #ff6a95);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3);
+}
+
+/* Efeito adicional de brilho no hover (opcional) */
+.addButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.addButton:hover::before {
+  left: 100%;
 }
