@@ -51,8 +51,8 @@ h3 {
   margin-top: 10x; /* Espaço entre seções */
   padding: 16px;
   border-radius: 8px;
-  background-color: #f9f9f9; /* mantém clean */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background-color: #ffffffd9; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 

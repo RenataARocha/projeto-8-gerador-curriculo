@@ -5,7 +5,7 @@
   align-items: center;
   text-align: center;
   padding: 20px 0;
-  background: #ffffff;
+  background: linear-gradient(90deg, #fadbe85d, #ffffff8c, #ffe8f5b2 );
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   width: 95%;
@@ -17,7 +17,8 @@
   font-weight: bold;
   color: #555;
   font-family: 'Playfair Display', serif; /* Cinza neutro pro título base */
-}
+}  
+
 
 .highlight {
   color: #ff6a95; /* Pink chamativo para destaque */

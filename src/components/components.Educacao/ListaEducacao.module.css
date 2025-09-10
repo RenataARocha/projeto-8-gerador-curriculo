@@ -105,6 +105,13 @@
 }
 
 /* Ajustando o tamanho dos labels de Início e Fim */
+.dateFields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .dateFields label {
   font-size: 13px;
   color: #555;
@@ -113,6 +120,13 @@
   margin-bottom: 12px;
 }
 
+.dateFields input[type="month"] {
+  width: 170px;
+  padding: 8px;
+  border: 1px solid rgba(255, 110, 175, 0.4);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
 
 /* BOTÃO ADICIONAR EDUCAÇÃO */
 .addButton {
