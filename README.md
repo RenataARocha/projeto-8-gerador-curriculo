@@ -6,6 +6,66 @@ O layout é responsivo, clean e otimizado para desktop e mobile, com feedback vi
 
 ---
 
+## 🎥 Demonstração
+
+
+
+https://github.com/user-attachments/assets/81b04549-728f-4f30-9a5c-5ca317db0c37
+
+
+---
+📁 Estrutura do Projeto
+```
+projeto-8/
+├── api/
+│   ├── node_modules/
+│   ├── .env
+│   ├── index.js
+│   ├── package-lock.json
+│   └── package.json
+├── dist/
+├── node_modules/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── CampoResumo/
+│   │   │   └── CampoResumo.tsx
+│   │   ├── Educacao/
+│   │   │   ├── ListaEducacao.module.css
+│   │   │   └── ListaEducacao.tsx
+│   │   ├── Exportacao/
+│   │   │   ├── ExportButtons.module.css
+│   │   │   └── ExportButtons.tsx
+│   │   ├── Form/
+│   │   │   ├── DadosPessoaisForm.module.css
+│   │   │   └── DadosPessoaisForm.tsx
+│   │   ├── Header/
+│   │   │   ├── Header.module.css
+│   │   │   └── Header.tsx
+│   │   ├── ListaExperiencia/
+│   │   │   ├── ListaExperiencia.module.css
+│   │   │   └── ListaExperiencia.tsx
+│   │   ├── ListaHabilidades/
+│   │   │   ├── ListaHabilidades.module.css
+│   │   │   └── ListaHabilidades.tsx
+│   │   └── Preview/
+│   │       ├── Preview.module.css
+│   │       └── Preview.tsx
+│   ├── types/
+│   │   └── types.ts
+│   ├── utils/
+│   │   └── api.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── .gitignore
+├── eslint.config.js
+└── index.html
+```
+
+---
+
 ## 👥 Integrantes e Contribuições
 
 ### 🤝 Organização do Projeto
