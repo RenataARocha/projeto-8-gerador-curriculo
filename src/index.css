@@ -1,17 +1,106 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
 
-/* Layout principal */
+/* ================================
+   VARIÁVEIS DE TEMA
+   ================================ */
+:root[data-theme="light"], 
+.light-theme {
+  /* Cores principais */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9f9fb;
+  --bg-tertiary: #f1f3f9;
+  
+  /* Textos */
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-muted: #999;
+  
+  /* Bordas */
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.05);
+  
+  /* Header */
+  --header-bg: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  --header-text: #333;
+  
+  /* Gradientes do tema rosa */
+  --gradient-start: #ff6b9d;
+  --gradient-middle: #ffc1cc;
+  --gradient-end: #f806b0;
+  
+  /* Toggle theme */
+  --toggle-bg: rgba(255, 106, 149, 0.1);
+  --toggle-bg-hover: rgba(255, 106, 149, 0.2);
+  --toggle-border: rgba(255, 106, 149, 0.2);
+  --toggle-shadow: rgba(255, 106, 149, 0.3);
+  
+  /* Dots */
+  --dots-color: #ff6b9d;
+  
+  /* Cards */
+  --card-bg: #ffffff;
+  --card-bg-secondary: #ffffffd9;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --card-shadow-light: rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="dark"], 
+.dark-theme {
+  /* Cores principais */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  
+  /* Textos */
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+  
+  /* Bordas */
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+  
+  /* Header */
+  --header-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+  --header-text: #ffffff;
+  
+  /* Gradientes do tema rosa (adaptados para dark) */
+  --gradient-start: #ff6b9d;
+  --gradient-middle: #ff8fb3;
+  --gradient-end: #ff1493;
+  
+  /* Toggle theme */
+  --toggle-bg: rgba(116, 185, 255, 0.1);
+  --toggle-bg-hover: rgba(116, 185, 255, 0.2);
+  --toggle-border: rgba(116, 185, 255, 0.2);
+  --toggle-shadow: rgba(116, 185, 255, 0.3);
+  
+  /* Dots */
+  --dots-color: #ff8fb3;
+  
+  /* Cards */
+  --card-bg: #2d2d2d;
+  --card-bg-secondary: rgba(45, 45, 45, 0.9);
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --card-shadow-light: rgba(0, 0, 0, 0.2);
+}
+
+/* ================================
+   LAYOUT PRINCIPAL 
+   ================================ */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #f9f9fb, #f1f3f9);
-  color: #333;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 h1,
 h2,
 h3 {
   font-family: 'Playfair Display', serif;
+  color: var(--text-primary);
 }
 
 .main-content {
@@ -25,37 +114,73 @@ h3 {
 /* Área dos formulários */
 .form-container {
   width: 40%;
-  background: #fff;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px var(--card-shadow);
   display: flex;
   flex-direction: column;
   gap: 20px;
   height: 130vh; 
   overflow-y: auto; 
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Área da prévia */
 .preview-container {
   flex: 1;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px var(--card-shadow);
   min-height: 800px;
   max-height: 1000px;
   overflow-y: auto;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .section-wrapper {
-  margin-top: 10x; /* Espaço entre seções */
+  margin-top: 10px;
   padding: 16px;
   border-radius: 8px;
-  background-color: #ffffffd9; 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: var(--card-bg-secondary);
+  box-shadow: 0 4px 12px var(--card-shadow-light);
+  transition: all 0.3s ease;
 }
-
 
 .section-wrapper button {
   margin-top: 12px;
+}
+
+/* ================================
+   SCROLLBAR PERSONALIZADA
+   ================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-start);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gradient-end);
+}
+
+/* ================================
+   SELEÇÃO DE TEXTO
+   ================================ */
+::selection {
+  background: var(--gradient-start);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--gradient-start);
+  color: white;
 }

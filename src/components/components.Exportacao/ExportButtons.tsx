@@ -7,6 +7,7 @@ interface Props {
   onExportTXT: () => void;
   onExportJSON: () => void;
   onClearAll: () => void;
+  onImportJSON: () => void;
 }
 
 export default function ExportButtons({
@@ -15,6 +16,7 @@ export default function ExportButtons({
   onExportTXT,
   onExportJSON,
   onClearAll,
+  onImportJSON
 }: Props) {
   return (
     <div className={styles.exportContainer}>
@@ -24,6 +26,10 @@ export default function ExportButtons({
         <button type="button" onClick={onExportWord}>Word</button>
         <button type="button" onClick={onExportTXT}>TXT</button>
         <button type="button" onClick={onExportJSON}>JSON</button>
+
+        <button onClick={onImportJSON}>Importar JSON</button>
+
+
         <button type="button" onClick={onClearAll} className={styles.clearAllButton}>Limpar Tudo</button>
       </div>
     </div>

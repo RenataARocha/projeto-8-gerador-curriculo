@@ -7,14 +7,14 @@ import ListaEducacao from "./components/components.Educacao/ListaEducacao";
 import ListaHabilidades from "./components/Habilidades/ListaHabilidades";
 import ExportButtons from "./components/components.Exportacao/ExportButtons";
 import Header from "./components/components.Header/Header";
+import { ThemeProvider } from "./contexts/ThemeProvider";
 
 import type { DadosPessoais, Experiencia } from "./components/types/types";
 import type { Educacao } from "./components/components.Educacao/ListaEducacao";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast"; // 🔹 Adicionei toast aqui
 
 import PreviewStyles from "./components/Preview/Preview.module.css"
 import jsPDF from "jspdf";
-
 
 export interface Habilidade {
   id: number;
@@ -22,8 +22,8 @@ export interface Habilidade {
   nivel: string;
 }
 
-function App() {
-  //  Estados principais
+function AppContent() {
+  // Estados principais
   const [dados, setDados] = useState<DadosPessoais>({
     nome: "",
     cargoDesejado: "",
@@ -39,19 +39,22 @@ function App() {
   const [listaDeHabilidades, setListaDeHabilidades] = useState<Habilidade[]>([]);
   const [habilidadeTemp, setHabilidadeTemp] = useState("");
 
-  //  Estados para controlar se as seções estão abertas
+  // Estados para controlar se as seções estão abertas
   const [openExperiencias, setOpenExperiencias] = useState(false);
   const [openEducacao, setOpenEducacao] = useState(false);
   const [openHabilidades, setOpenHabilidades] = useState(false);
 
-  //  Adicionar habilidades
+  // 🔹 Estado para controlar se os dados já foram carregados
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Adicionar habilidades
   const adicionarHabilidade = (habilidadesString: string, nivel: string) => {
     if (!habilidadesString.trim()) return;
 
     const habilidadesDigitadas = habilidadesString.split(",").map((hab) => ({
       id: Date.now() + Math.random(),
       nome: hab.trim(),
-      nivel: nivel, // padrão
+      nivel: nivel,
     }));
 
     setListaDeHabilidades((listaAnterior) => [
@@ -61,7 +64,7 @@ function App() {
     setHabilidadeTemp("");
   };
 
-  //  Remover habilidade
+  // Remover habilidade
   const removerHabilidade = (id: number) => {
     setListaDeHabilidades((listaAnterior) =>
       listaAnterior.filter((h) => h.id !== id)
@@ -70,11 +73,38 @@ function App() {
 
   const previewRef = useRef<HTMLDivElement>(null);
 
-  //  Ref para os componentes de formulário
+  // Refs para os componentes de formulário
   const dadosRef = useRef<{ resetForm: () => void }>(null);
   const experienciasRef = useRef<{ resetForm: () => void }>(null);
   const educacoesRef = useRef<{ resetForm: () => void }>(null);
   const habilidadesRef = useRef<{ resetForm: () => void }>(null);
+
+  // 🔹 Função para importar JSON 
+  const handleImportJSON = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importedData = JSON.parse(e.target?.result as string);
+        
+        if (importedData.dados) setDados(importedData.dados);
+        if (importedData.experiencias) setExperiencias(importedData.experiencias);
+        if (importedData.educacoes) setEducacoes(importedData.educacoes);
+        if (importedData.habilidades) setListaDeHabilidades(importedData.habilidades);
+        
+        toast.success('Dados importados com sucesso!');
+      } catch (error) {
+        toast.error('Erro ao importar arquivo. Verifique o formato JSON.');
+        console.error('Erro na importação:', error);
+      }
+    };
+    reader.readAsText(file);
+    
+    // Reset do input para permitir reimportar o mesmo arquivo
+    event.target.value = '';
+  };
 
   const handleClearAll = () => {
     setDados({
@@ -91,14 +121,19 @@ function App() {
     setListaDeHabilidades([]);
     setHabilidadeTemp("");
 
-    //  Reseta formulários internos chamando os métodos expostos pelas refs
+    // 🔹 Limpa também o localStorage
+    localStorage.removeItem("curriculoData");
+
+    // Reseta formulários internos chamando os métodos expostos pelas refs
     dadosRef.current?.resetForm();
     experienciasRef.current?.resetForm();
     educacoesRef.current?.resetForm();
     habilidadesRef.current?.resetForm();
+
+    toast.success('Todos os dados foram limpos!');
   };
 
-  //  Exportar JSON
+  // Exportar JSON
   const handleExportJSON = () => {
     const data = {
       dados,
@@ -117,16 +152,14 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
-  //  Exportar TXT
+  // Exportar TXT
   const handleExportTXT = () => {
-    //  Nome do arquivo seguro
     const nomeUsuario = dados.nome && dados.nome.trim() !== "" ? dados.nome : "curriculo";
     const nomeArquivo = nomeUsuario
       .trim()
       .replace(/\s+/g, "_")
       .replace(/[^a-zA-Z0-9_]/g, "");
 
-    //  Experiências
     const experienciasTxt = experiencias.length
       ? experiencias
         .map(
@@ -136,7 +169,6 @@ function App() {
         .join("\n\n")
       : "Nenhuma experiência cadastrada";
 
-    //  Educação
     const educacoesTxt = educacoes.length
       ? educacoes
         .map(
@@ -146,7 +178,6 @@ function App() {
         .join("\n\n")
       : "Nenhuma educação cadastrada";
 
-    //  Habilidades
     const habilidadesTxt = listaDeHabilidades.length
       ? listaDeHabilidades
         .map(
@@ -155,7 +186,6 @@ function App() {
         .join("\n")
       : "Nenhuma habilidade cadastrada";
 
-    //  Conteúdo completo
     const content = `
 Nome: ${dados.nome || "Seu Nome"}
 Cargo Desejado: ${dados.cargoDesejado || "-"}
@@ -177,7 +207,6 @@ Educação:
 ${educacoesTxt}
 `;
 
-    //  Cria blob e faz download com nome do usuário
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -189,18 +218,14 @@ ${educacoesTxt}
     URL.revokeObjectURL(url);
   };
 
-
-
-  //  Exportar WORD
+  // Exportar WORD
   const handleExportWord = () => {
-    //  Nome do arquivo seguro
     const nomeUsuario = dados.nome && dados.nome.trim() !== "" ? dados.nome : "curriculo";
     const nomeArquivo = nomeUsuario
       .trim()
       .replace(/\s+/g, "_")
       .replace(/[^a-zA-Z0-9_]/g, "");
 
-    //  Experiências
     const experienciasHtml = experiencias.length
       ? experiencias
         .map(
@@ -210,7 +235,6 @@ ${educacoesTxt}
         .join("")
       : "<li>Nenhuma experiência cadastrada</li>";
 
-    //  Educação
     const educacoesHtml = educacoes.length
       ? educacoes
         .map(
@@ -220,7 +244,6 @@ ${educacoesTxt}
         .join("")
       : "<li>Nenhuma educação cadastrada</li>";
 
-    //  Habilidades
     const habilidadesHtml = listaDeHabilidades.length
       ? listaDeHabilidades
         .map(
@@ -230,7 +253,6 @@ ${educacoesTxt}
         .join("")
       : "<li>Nenhuma habilidade cadastrada</li>";
 
-    //  Conteúdo HTML completo com estilos inline
     const htmlContent = `
 <html>
 <head><meta charset="UTF-8"><title>Currículo</title></head>
@@ -264,22 +286,20 @@ ${educacoesHtml}
 </html>
 `;
 
-    //  Cria blob e faz download com nome correto
     const blob = new Blob([htmlContent], { type: "application/msword" });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${nomeArquivo}.doc`; // nome do usuário
-    document.body.appendChild(link); // adiciona no DOM para o navegador respeitar o download
+    link.download = `${nomeArquivo}.doc`;
+    document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
   };
 
-
-  //  Exportar PDF
+  // Exportar PDF
   const handleExportPDF = () => {
     const previewEl = previewRef.current as HTMLElement | null;
     if (!previewEl) return;
@@ -297,7 +317,6 @@ ${educacoesHtml}
     const headerElement = previewEl.querySelector(`.${PreviewStyles.header}`) as HTMLElement | null;
     if (headerElement) headerElement.style.display = "none";
 
-    // Cria o nome do arquivo baseado no nome do usuário
     const nomeArquivo = (dados.nome || "curriculo")
       .trim()
       .replace(/\s+/g, "_")
@@ -340,7 +359,6 @@ ${educacoesHtml}
             doc.link(xMm, yMm, Math.max(wMm, 1), Math.max(hMm, 1), { url: href });
           });
 
-          // Usa o nome do usuário para salvar
           doc.save(`${nomeArquivo}.pdf`);
         } finally {
           if (headerElement) headerElement.style.display = "";
@@ -349,102 +367,102 @@ ${educacoesHtml}
     });
   };
 
-  // 🔹 Inicialização dos dados padrões (pra usar no carregamento)
-  const initialDados: DadosPessoais = {
-    nome: "",
-    cargoDesejado: "",
-    email: "",
-    telefone: "",
-    linkedin: "",
-    github: "",
-    resumo: "",
-  };
-
   // 🔹 Carregar dados do localStorage na inicialização
-  const [isLoaded, setIsLoaded] = useState(false);
-
   useEffect(() => {
     const savedData = localStorage.getItem("curriculoData");
     if (savedData) {
       try {
         const parsed = JSON.parse(savedData);
-        setDados(parsed.dados || initialDados);
+        setDados(parsed.dados || {
+          nome: "",
+          cargoDesejado: "",
+          email: "",
+          telefone: "",
+          linkedin: "",
+          github: "",
+          resumo: "",
+        });
         setExperiencias(parsed.experiencias || []);
         setEducacoes(parsed.educacoes || []);
         setListaDeHabilidades(parsed.habilidades || []);
+        
+        // 🔹 Mostra toast apenas se há dados salvos
+        if (parsed.dados?.nome || parsed.experiencias?.length || parsed.educacoes?.length || parsed.habilidades?.length) {
+          toast.success('Dados anteriores carregados automaticamente!');
+        }
       } catch (error) {
         console.error("Erro ao ler dados do localStorage:", error);
       }
     }
-    setIsLoaded(true); // sinaliza que os dados já foram carregados
+    setIsLoaded(true);
   }, []);
 
-  // 🔹 Salvar dados no localStorage sempre que mudar
+  // 🔹 Salvar dados no localStorage sempre que mudar (só depois do carregamento inicial)
   useEffect(() => {
-    const data = { dados, experiencias, educacoes, habilidades: listaDeHabilidades };
-    localStorage.setItem("curriculoData", JSON.stringify(data));
-  }, [dados, experiencias, educacoes, listaDeHabilidades]);
-
+    if (isLoaded) {
+      const data = { dados, experiencias, educacoes, habilidades: listaDeHabilidades };
+      localStorage.setItem("curriculoData", JSON.stringify(data));
+    }
+  }, [dados, experiencias, educacoes, listaDeHabilidades, isLoaded]);
 
   return (
     <>
-      {/* 🔹 Ativa os toasts globais */}
       <Toaster position="top-right" reverseOrder={false} />
+      
+      <input
+        type="file"
+        accept=".json"
+        onChange={handleImportJSON}
+        style={{ display: 'none' }}
+        id="import-json-input"
+      />
 
       <Header />
       <div className="main-content">
         <form className="form-container">
-          {isLoaded && (
-            <DadosPessoaisForm dados={dados} setDados={setDados} ref={dadosRef} />
-          )}
+          <DadosPessoaisForm dados={dados} setDados={setDados} ref={dadosRef} />
 
           <div className="section-wrapper">
-            {isLoaded && (
-              <ListaExperiencias
-                onChange={setExperiencias}
-                open={openExperiencias}
-                setOpen={setOpenExperiencias}
-                ref={experienciasRef}
-              />
-            )}
-          </div>
-
-          <div className="section-wrapper">
-            {isLoaded && (
-              <ListaEducacao
-                onChange={setEducacoes}
-                open={openEducacao}
-                setOpen={setOpenEducacao}
-                ref={educacoesRef}
-              />
-            )}
-          </div>
-
-          <div className="section-wrapper">
-            {isLoaded && (
-              <ListaHabilidades
-                habilidades={listaDeHabilidades}
-                removerHabilidade={removerHabilidade}
-                habilidadeTemp={habilidadeTemp}
-                setHabilidadeTemp={setHabilidadeTemp}
-                adicionarHabilidade={adicionarHabilidade}
-                open={openHabilidades}
-                setOpen={setOpenHabilidades}
-                ref={habilidadesRef}
-              />
-            )}
-          </div>
-
-          {isLoaded && (
-            <ExportButtons
-              onExportPDF={handleExportPDF}
-              onExportWord={handleExportWord}
-              onExportTXT={handleExportTXT}
-              onExportJSON={handleExportJSON}
-              onClearAll={handleClearAll}
+            <ListaExperiencias
+              onChange={setExperiencias}
+              open={openExperiencias}
+              setOpen={setOpenExperiencias}
+              ref={experienciasRef}
             />
-          )}
+          </div>
+
+          <div className="section-wrapper">
+            <ListaEducacao
+              onChange={setEducacoes}
+              open={openEducacao}
+              setOpen={setOpenEducacao}
+              ref={educacoesRef}
+            />
+          </div>
+
+          <div className="section-wrapper">
+            <ListaHabilidades
+              habilidades={listaDeHabilidades}
+              removerHabilidade={removerHabilidade}
+              habilidadeTemp={habilidadeTemp}
+              setHabilidadeTemp={setHabilidadeTemp}
+              adicionarHabilidade={adicionarHabilidade}
+              open={openHabilidades}
+              setOpen={setOpenHabilidades}
+              ref={habilidadesRef}
+            />
+          </div>
+
+          <ExportButtons
+            onExportPDF={handleExportPDF}
+            onExportWord={handleExportWord}
+            onExportTXT={handleExportTXT}
+            onExportJSON={handleExportJSON}
+            onClearAll={handleClearAll}
+            onImportJSON={() => document.getElementById('import-json-input')?.click()}
+          />
         </form>
+
         <div className="preview-container" ref={previewRef}>
           <Preview
             dados={dados}
@@ -457,7 +475,15 @@ ${educacoesHtml}
       </div>
     </>
   );
+}
 
+// 🔹 Função App que envolve tudo no ThemeProvider
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
 }
 
 export default App;
