@@ -169,7 +169,8 @@ h3 {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gradient-end);
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end), var(--dots-color), var(--gradient-end));
+transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ================================
