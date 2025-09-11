@@ -9,16 +9,18 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <h1>
         Seu Currículo <span className={styles.highlight}>Interactive</span>{" "}
-        <button 
+       
+       <button 
           className={styles.themeToggle}
-          onClick={toggleTheme}
+          /*  onClick  ={toggleTheme}  */ 
           aria-label={isDarkMode ? "Ativar modo claro" : "Ativar modo escuro"}
           title={isDarkMode ? "Modo claro" : "Modo escuro"}
         >
           <span className={styles.themeIcon}>
             {isDarkMode ? '☀️' : '🌙'}
           </span>
-        </button>
+        </button>   
+
       </h1>
       <p>Mostre quem você é, não só o que você fez.</p>
       <div className={styles.dots}>
