@@ -3,7 +3,7 @@ import { useTheme } from "../../hooks/useTheme";
 import styles from "./Header.module.css";
 
 const Header: React.FC = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode} = useTheme();
 
   return (
     <header className={styles.header}>
