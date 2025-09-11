@@ -459,7 +459,6 @@ ${educacoesHtml}
             onExportTXT={handleExportTXT}
             onExportJSON={handleExportJSON}
             onClearAll={handleClearAll}
-            onImportJSON={() => document.getElementById('import-json-input')?.click()}
           />
         </form>
 
