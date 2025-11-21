@@ -88,12 +88,12 @@ function AppContent() {
     reader.onload = (e) => {
       try {
         const importedData = JSON.parse(e.target?.result as string);
-        
+
         if (importedData.dados) setDados(importedData.dados);
         if (importedData.experiencias) setExperiencias(importedData.experiencias);
         if (importedData.educacoes) setEducacoes(importedData.educacoes);
         if (importedData.habilidades) setListaDeHabilidades(importedData.habilidades);
-        
+
         toast.success('Dados importados com sucesso!');
       } catch (error) {
         toast.error('Erro ao importar arquivo. Verifique o formato JSON.');
@@ -101,7 +101,7 @@ function AppContent() {
       }
     };
     reader.readAsText(file);
-    
+
     // Reset do input para permitir reimportar o mesmo arquivo
     event.target.value = '';
   };
@@ -307,12 +307,12 @@ ${educacoesHtml}
     const doc = new jsPDF("p", "mm", "a4");
     const a4Width = 210;
     const padding = 18;
-    const targetWidthMm = a4Width * padding;
+    const targetWidthMm = a4Width - padding;
     const contentWidthPx = previewEl.offsetWidth;
     if (!contentWidthPx) return;
     const mmPerPx = targetWidthMm / contentWidthPx;
     const xOffset = 6;
-    const yOffset = 2;
+    const yOffset = -12;
 
     const headerElement = previewEl.querySelector(`.${PreviewStyles.header}`) as HTMLElement | null;
     if (headerElement) headerElement.style.display = "none";
@@ -328,7 +328,7 @@ ${educacoesHtml}
       width: targetWidthMm,
       windowWidth: contentWidthPx,
       html2canvas: {
-        scale: 0.3,
+        scale: 0.4,
         useCORS: true,
       },
       callback: (doc) => {
@@ -367,6 +367,7 @@ ${educacoesHtml}
     });
   };
 
+
   // 🔹 Carregar dados do localStorage na inicialização
   useEffect(() => {
     const savedData = localStorage.getItem("curriculoData");
@@ -385,7 +386,7 @@ ${educacoesHtml}
         setExperiencias(parsed.experiencias || []);
         setEducacoes(parsed.educacoes || []);
         setListaDeHabilidades(parsed.habilidades || []);
-        
+
         // 🔹 Mostra toast apenas se há dados salvos
         if (parsed.dados?.nome || parsed.experiencias?.length || parsed.educacoes?.length || parsed.habilidades?.length) {
           toast.success('Dados anteriores carregados automaticamente!');
@@ -408,7 +409,7 @@ ${educacoesHtml}
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
-      
+
       <input
         type="file"
         accept=".json"

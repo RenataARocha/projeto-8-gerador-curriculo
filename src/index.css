@@ -116,7 +116,9 @@ h3 {
   border-radius: 10px;
   box-shadow: 0 4px 12px var(--card-shadow);
   overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  /* 🔹 REMOVI max-height: calc(100vh - 200px); */
+  min-height: 400px;
+  /* 🔹 Mantive apenas min-height */
   position: sticky;
   top: 20px;
   transition: all 0.3s ease;
