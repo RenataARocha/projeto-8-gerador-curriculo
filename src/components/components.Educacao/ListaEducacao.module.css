@@ -1,11 +1,12 @@
 /* CONTAINER PRINCIPAL */
 .listaEducacaoContainer {
-  background: white;
+  background: var(--card-bg, white);
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px var(--card-shadow, rgba(0, 0, 0, 0.05));
   width: 100%;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 /* CABEÇALHO */
@@ -13,6 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 /* LISTA DE EDUCAÇÕES */
@@ -26,7 +28,7 @@
 
 /* ITEM DE EDUCAÇÃO */
 .educacaoItem {
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--card-bg-secondary, rgba(255, 255, 255, 0.4));
   border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 10px;
   padding: 20px;
@@ -35,19 +37,30 @@
   gap: 15px;
   width: 100%;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
-/*  CAMPOS DE TEXTO */
+.educacaoItem:hover {
+  border-color: #ff6a95;
+  box-shadow: 0 2px 10px rgba(255, 106, 149, 0.15);
+}
+
+/* CAMPOS DE TEXTO */
 .educacaoItem input,
 .educacaoItem textarea,
 .educacaoItem select {
   width: 100%;
-  padding: 10px;
-  font-size: 14px;
+  padding: 12px;
+  font-size: clamp(13px, 1.5vw, 14px);
   border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 8px;
   outline: none;
   box-sizing: border-box;
+  background: var(--card-bg, white);
+  color: var(--text-primary, #333);
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .educacaoItem input::placeholder,
@@ -59,88 +72,84 @@
 .educacaoItem textarea:focus,
 .educacaoItem select:focus {
   border-color: #ff6a95;
+  box-shadow: 0 0 8px rgba(255, 106, 149, 0.2);
 }
 
-/*BOTÃO DE REMOVER EDUCAÇÃO */
-.educacaoItem button {
-  background: transparent;
-  color: #ff6a95;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  align-self: flex-end;
-}
-
-.educacaoItem button:hover {
-  text-decoration: underline;
-}
-
-/* Cabeçalho do item */
+/* CABEÇALHO DO ITEM */
 .headerItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 10px;
 }
 
 .headerItem h3 {
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(14px, 2vw, 16px);
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary, #333);
 }
 
-/* Botão de remover no topo com X */
+/* BOTÃO DE REMOVER */
 .removeButton {
   background: transparent;
   border: none;
   color: #ff6a95;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
+  transition: all 0.2s;
+  padding: 0 5px;
 }
 
 .removeButton:hover {
   color: #e05580;
+  transform: scale(1.2);
 }
 
-/* Ajustando o tamanho dos labels de Início e Fim */
+/* CAMPOS DE DATA */
 .dateFields {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .dateFields label {
-  font-size: 13px;
-  color: #555;
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  gap: 6px;
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: var(--text-secondary, #555);
+  font-weight: 500;
 }
 
 .dateFields input[type="month"] {
-  width: 170px;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 8px;
   box-sizing: border-box;
+  background: var(--card-bg, white);
+  color: var(--text-primary, #333);
+  font-size: clamp(13px, 1.5vw, 14px);
 }
 
-/* BOTÃO ADICIONAR EDUCAÇÃO */
+.dateFields input[type="month"]:focus {
+  border-color: #ff6a95;
+  box-shadow: 0 0 8px rgba(255, 106, 149, 0.2);
+}
+
+/* BOTÃO ADICIONAR */
 .addButton {
   background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129));
   color: white;
   border: none;
-  padding: 10px;
+  padding: 12px 20px;
   border-radius: 15px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: clamp(13px, 1.5vw, 14px);
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
   position: relative;
   overflow: hidden;
 }
@@ -151,7 +160,6 @@
   box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3);
 }
 
-/* Efeito adicional de brilho no hover (opcional) */
 .addButton::before {
   content: '';
   position: absolute;
@@ -165,4 +173,86 @@
 
 .addButton:hover::before {
   left: 100%;
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+
+/* Tablets */
+@media screen and (max-width: 968px) {
+  .listaEducacaoContainer {
+    padding: 18px;
+  }
+
+  .educacaoItem {
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .dateFields {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile grande */
+@media screen and (max-width: 768px) {
+  .listaEducacaoContainer {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .educacaoItem {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .dateFields {
+    gap: 10px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .listaEducacaoContainer {
+    padding: 14px;
+  }
+
+  .educacaoItem {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .headerItem {
+    flex-wrap: wrap;
+  }
+
+  .educacaoItem input,
+  .educacaoItem select {
+    padding: 10px;
+  }
+
+  .dateFields {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dateFields input[type="month"] {
+    width: 100%;
+  }
+
+  .addButton {
+    padding: 10px 16px;
+  }
+}
+
+/* Mobile pequeno */
+@media screen and (max-width: 375px) {
+  .listaEducacaoContainer {
+    padding: 12px;
+  }
+
+  .educacaoItem {
+    padding: 12px;
+  }
 }

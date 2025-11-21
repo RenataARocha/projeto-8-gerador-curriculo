@@ -1,9 +1,10 @@
-/*  CONTAINER PRINCIPAL */
+/* CONTAINER PRINCIPAL */
 .listaExperienciasContainer {
-  background: white;
+  background: var(--card-bg, white);
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px var(--card-shadow, rgba(0, 0, 0, 0.05));
+  transition: all 0.3s ease;
 }
 
 /* LISTA DE EXPERIÊNCIAS */
@@ -17,7 +18,7 @@
 
 /* ITEM DE EXPERIÊNCIA */
 .experienciaItem {
-  background: rgba(255, 255, 255, 0.4);
+  background: var(--card-bg-secondary, rgba(255, 255, 255, 0.4));
   border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 10px;
   padding: 20px;
@@ -26,46 +27,63 @@
   gap: 15px;
   width: 100%;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-/* Cabeçalho com título + botão de remover */
+.experienciaItem:hover {
+  border-color: #ff6a95;
+  box-shadow: 0 2px 10px rgba(255, 106, 149, 0.15);
+}
+
+/* Cabeçalho */
 .headerItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .headerItem h3 {
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(14px, 2vw, 16px);
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary, #333);
 }
 
-.headerItem button {
+.removeButton {
   background: transparent;
   border: none;
   color: #ff6a95;
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
-  text-decoration: none;
+  transition: all 0.2s;
+  padding: 0 5px;
 }
 
-.headerItem button:hover {
-  text-decoration: underline;
+.removeButton:hover {
+  color: #e05580;
+  transform: scale(1.2);
 }
 
-/* CAMPOS DE TEXTO E ÁREA */
+/* CAMPOS */
 .experienciaItem input,
 .experienciaItem textarea {
   width: 100%;
-  margin-bottom: 8px;
-  padding: 10px;
-  font-size: 14px;
+  padding: 12px;
+  font-size: clamp(13px, 1.5vw, 14px);
   border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 8px;
   outline: none;
   box-sizing: border-box;
+  background: var(--card-bg, white);
+  color: var(--text-primary, #333);
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.experienciaItem textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 .experienciaItem input::placeholder,
@@ -76,73 +94,98 @@
 .experienciaItem input:focus,
 .experienciaItem textarea:focus {
   border-color: #ff6a95;
+  box-shadow: 0 0 8px rgba(255, 106, 149, 0.2);
 }
 
-/* Wrapper para textarea + botão melhorar */
-.descricaoWrapper {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
+.experienciaItem input:disabled,
+.experienciaItem textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* CAMPOS DE DATA */
 .dateFields {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .dateFields label {
   display: flex;
   flex-direction: column;
-  font-size: 13px;
-  color: #555;
+  gap: 6px;
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: var(--text-secondary, #555);
+  font-weight: 500;
 }
 
 .dateFields input[type="month"] {
-  width: 170px;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid rgba(255, 110, 175, 0.4);
   border-radius: 8px;
   box-sizing: border-box;
+  background: var(--card-bg, white);
+  color: var(--text-primary, #333);
+  font-size: clamp(13px, 1.5vw, 14px);
+}
+
+.dateFields input[type="month"]:focus {
+  border-color: #ff6a95;
+  box-shadow: 0 0 8px rgba(255, 106, 149, 0.2);
 }
 
 /* CHECKBOX */
 .checkboxLabel {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #555;
+  gap: 8px;
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: var(--text-secondary, #555);
+  cursor: pointer;
 }
 
-/* Estilos para o botão Adicionar experiência */
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #ff6a95;
+}
+
+/* BOTÕES */
 .addButton,
 .salvarButton {
   background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129));
   color: white;
   border: none;
-  padding: 10px;
+  padding: 12px 20px;
   border-radius: 15px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: clamp(13px, 1.5vw, 14px);
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
   margin-top: 10px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.addButton:hover,
-.salvarButton:hover {
+.addButton:hover:not(:disabled),
+.salvarButton:hover:not(:disabled) {
   background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129), #ff6a95);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3);
 }
 
-/* Efeito adicional de brilho no hover (opcional) */
+.addButton:disabled,
+.salvarButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .addButton::before,
 .salvarButton::before {
   content: '';
@@ -155,7 +198,122 @@
   transition: left 0.5s;
 }
 
-.addButton:hover::before,
-.salvarButton:hover::before {
+.addButton:hover:not(:disabled)::before,
+.salvarButton:hover:not(:disabled)::before {
   left: 100%;
+}
+
+/* SPINNER */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+
+/* Tablets */
+@media screen and (max-width: 968px) {
+  .listaExperienciasContainer {
+    padding: 18px;
+  }
+
+  .experienciaItem {
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .dateFields {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile grande */
+@media screen and (max-width: 768px) {
+  .listaExperienciasContainer {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .experienciaItem {
+    padding: 16px;
+  }
+
+  .experienciaItem textarea {
+    min-height: 90px;
+  }
+
+  .dateFields {
+    gap: 10px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .listaExperienciasContainer {
+    padding: 14px;
+  }
+
+  .experienciasList {
+    gap: 12px;
+  }
+
+  .experienciaItem {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .headerItem {
+    flex-wrap: wrap;
+  }
+
+  .experienciaItem input,
+  .experienciaItem textarea {
+    padding: 10px;
+  }
+
+  .experienciaItem textarea {
+    min-height: 80px;
+  }
+
+  .dateFields {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dateFields input[type="month"] {
+    width: 100%;
+  }
+
+  .addButton,
+  .salvarButton {
+    padding: 10px 16px;
+  }
+}
+
+/* Mobile pequeno */
+@media screen and (max-width: 375px) {
+  .listaExperienciasContainer {
+    padding: 12px;
+  }
+
+  .experienciaItem {
+    padding: 12px;
+  }
 }

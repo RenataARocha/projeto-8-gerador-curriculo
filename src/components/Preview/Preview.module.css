@@ -19,7 +19,8 @@
 }
 
 .header:hover {
-background: linear-gradient(90deg, #fdf2f8,#fadbed, #ffe8f5);  transform: translateY(-2px);
+  background: linear-gradient(90deg, #fdf2f8, #fadbed, #ffe8f5);
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3);
 }
 
@@ -302,5 +303,134 @@ p {
   }
 
 
-  
+
+}
+
+/* ================================
+   RESPONSIVIDADE DO PREVIEW
+   ================================ */
+
+@media screen and (max-width: 768px) {
+  .previewContainer {
+    font-size: 14px;
+  }
+
+  .header {
+    padding: 8px 16px;
+    flex-wrap: wrap;
+  }
+
+  .topBar {
+    gap: 5px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .title {
+    font-size: 12px;
+  }
+
+  .personalInfo {
+    padding: 24px 16px 0;
+  }
+
+  .personalInfo h1 {
+    font-size: 16px;
+  }
+
+  .jobTitle {
+    font-size: 13px;
+  }
+
+  .contactInfo {
+    font-size: 11px;
+  }
+
+  .contactRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .section {
+    margin: 10px 20px;
+  }
+
+  .sectionTitle,
+  .sectionTitle1 {
+    font-size: 13px;
+  }
+
+  .item p {
+    font-size: 11px;
+  }
+
+  .skillTag {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .previewContainer {
+    font-size: 13px;
+  }
+
+  .header {
+    padding: 6px 12px;
+  }
+
+  .personalInfo {
+    padding: 20px 12px 0;
+  }
+
+  .personalInfo h1 {
+    font-size: 15px;
+  }
+
+  .jobTitle {
+    font-size: 12px;
+  }
+
+  .contactInfo,
+  .contactLinks {
+    font-size: 10px;
+  }
+
+  .section {
+    margin: 8px 16px;
+  }
+
+  .sectionTitle,
+  .sectionTitle1 {
+    font-size: 12px;
+  }
+
+  .item {
+    margin-bottom: 12px;
+  }
+
+  .item p {
+    font-size: 10px;
+  }
+
+  .skillTag {
+    font-size: 10px;
+  }
+
+  .habilidadesList {
+    line-height: 1.6;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .personalInfo h1 {
+    font-size: 14px;
+  }
+
+  .section {
+    margin: 8px 12px;
+  }
 }

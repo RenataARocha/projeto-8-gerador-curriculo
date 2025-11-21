@@ -3,82 +3,52 @@
 /* ================================
    VARIÁVEIS DE TEMA
    ================================ */
-:root[data-theme="light"], 
+:root[data-theme="light"],
 .light-theme {
-  /* Cores principais */
   --bg-primary: #ffffff;
   --bg-secondary: #f9f9fb;
   --bg-tertiary: #f1f3f9;
-  
-  /* Textos */
   --text-primary: #333;
   --text-secondary: #666;
   --text-muted: #999;
-  
-  /* Bordas */
   --border-color: rgba(0, 0, 0, 0.1);
   --border-light: rgba(0, 0, 0, 0.05);
-  
-  /* Header */
   --header-bg: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   --header-text: #333;
-  
-  /* Gradientes do tema rosa */
   --gradient-start: #ff6b9d;
   --gradient-middle: #ffc1cc;
   --gradient-end: #f806b0;
-  
-  /* Toggle theme */
   --toggle-bg: rgba(255, 106, 149, 0.1);
   --toggle-bg-hover: rgba(255, 106, 149, 0.2);
   --toggle-border: rgba(255, 106, 149, 0.2);
   --toggle-shadow: rgba(255, 106, 149, 0.3);
-  
-  /* Dots */
   --dots-color: #ff6b9d;
-  
-  /* Cards */
   --card-bg: #ffffff;
-  --card-bg-secondary: #ffffffd9;
+  --card-bg-secondary: rgba(255, 255, 255, 0.85);
   --card-shadow: rgba(0, 0, 0, 0.08);
   --card-shadow-light: rgba(0, 0, 0, 0.05);
 }
 
-:root[data-theme="dark"], 
+:root[data-theme="dark"],
 .dark-theme {
-  /* Cores principais */
   --bg-primary: #1a1a1a;
   --bg-secondary: #2d2d2d;
   --bg-tertiary: #3a3a3a;
-  
-  /* Textos */
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
   --text-muted: #808080;
-  
-  /* Bordas */
   --border-color: rgba(255, 255, 255, 0.1);
   --border-light: rgba(255, 255, 255, 0.05);
-  
-  /* Header */
   --header-bg: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
   --header-text: #ffffff;
-  
-  /* Gradientes do tema rosa (adaptados para dark) */
   --gradient-start: #ff6b9d;
   --gradient-middle: #ff8fb3;
   --gradient-end: #ff1493;
-  
-  /* Toggle theme */
   --toggle-bg: rgba(116, 185, 255, 0.1);
   --toggle-bg-hover: rgba(116, 185, 255, 0.2);
   --toggle-border: rgba(116, 185, 255, 0.2);
   --toggle-shadow: rgba(116, 185, 255, 0.3);
-  
-  /* Dots */
   --dots-color: #160a0e;
-  
-  /* Cards */
   --card-bg: #2d2d2d;
   --card-bg-secondary: rgba(45, 45, 45, 0.9);
   --card-shadow: rgba(0, 0, 0, 0.3);
@@ -86,14 +56,21 @@
 }
 
 /* ================================
-   LAYOUT PRINCIPAL 
+   RESET E BASE
    ================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
   color: var(--text-primary);
   transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
 }
 
 h1,
@@ -103,48 +80,61 @@ h3 {
   color: var(--text-primary);
 }
 
+/* ================================
+   LAYOUT PRINCIPAL 
+   ================================ */
 .main-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Área dos formulários */
+/* ================================
+   FORMULÁRIO
+   ================================ */
 .form-container {
-  width: 40%;
   background: var(--card-bg);
-  padding: 20px;
+  padding: 24px;
   border-radius: 20px;
   box-shadow: 0 4px 12px var(--card-shadow);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 130vh; 
-  overflow-y: auto; 
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  transition: all 0.3s ease;
 }
 
-/* Área da prévia */
+/* ================================
+   PREVIEW
+   ================================ */
 .preview-container {
-  flex: 1;
   background: var(--card-bg);
   border-radius: 10px;
   box-shadow: 0 4px 12px var(--card-shadow);
-  min-height: 800px;
-  max-height: 1000px;
   overflow-y: auto;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  max-height: calc(100vh - 200px);
+  position: sticky;
+  top: 20px;
+  transition: all 0.3s ease;
 }
 
+/* ================================
+   SECTION WRAPPER
+   ================================ */
 .section-wrapper {
-  margin-top: 10px;
-  padding: 16px;
-  border-radius: 8px;
+  padding: 20px;
+  border-radius: 12px;
   background-color: var(--card-bg-secondary);
-  box-shadow: 0 4px 12px var(--card-shadow-light);
+  box-shadow: 0 2px 8px var(--card-shadow-light);
   transition: all 0.3s ease;
+}
+
+.section-wrapper:hover {
+  box-shadow: 0 4px 12px var(--card-shadow);
 }
 
 .section-wrapper button {
@@ -152,7 +142,7 @@ h3 {
 }
 
 /* ================================
-   SCROLLBAR PERSONALIZADA
+   SCROLLBAR
    ================================ */
 ::-webkit-scrollbar {
   width: 8px;
@@ -161,16 +151,17 @@ h3 {
 
 ::-webkit-scrollbar-track {
   background: var(--bg-tertiary);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--gradient-start);
   border-radius: 4px;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end), var(--dots-color), var(--gradient-end));
-transition: background 0.3s ease, color 0.3s ease;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
 }
 
 /* ================================
@@ -184,4 +175,101 @@ transition: background 0.3s ease, color 0.3s ease;
 ::-moz-selection {
   background: var(--gradient-start);
   color: white;
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+
+/* Tablets grandes e desktops pequenos */
+@media screen and (max-width: 1200px) {
+  .main-content {
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .form-container,
+  .preview-container {
+    padding: 20px;
+  }
+}
+
+/* Tablets */
+@media screen and (max-width: 968px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .preview-container {
+    position: relative;
+    top: 0;
+    max-height: none;
+    min-height: 600px;
+  }
+
+  .form-container {
+    max-height: none;
+  }
+}
+
+/* Mobile grande */
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .form-container {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .preview-container {
+    border-radius: 8px;
+    min-height: 500px;
+  }
+
+  .section-wrapper {
+    padding: 16px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .form-container {
+    padding: 12px;
+    border-radius: 12px;
+    gap: 16px;
+  }
+
+  .preview-container {
+    min-height: 400px;
+  }
+
+  .section-wrapper {
+    padding: 12px;
+    border-radius: 8px;
+  }
+}
+
+/* Mobile pequeno */
+@media screen and (max-width: 375px) {
+  .main-content {
+    padding: 6px;
+  }
+
+  .form-container,
+  .preview-container {
+    border-radius: 8px;
+  }
+
+  .section-wrapper {
+    padding: 10px;
+  }
 }

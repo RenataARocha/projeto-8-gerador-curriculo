@@ -1,3 +1,10 @@
+.exportContainer {
+  background-color: var(--card-bg, #fff);
+  border-radius: 10px;
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
 .dividerLine {
   width: 100%;
   height: 1px;
@@ -5,61 +12,60 @@
   margin-bottom: 20px;
 }
 
-.exportContainer {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 25px;
-}
-
 .exportRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  flex-wrap: wrap;
   align-items: center;
 }
 
 .exportRow button {
-  background: #fff;
+  background: var(--card-bg, #fff);
   border: 1px solid #ff6eaf69;
-  color: #585858;
-  padding: 10px 10px;
+  color: var(--text-secondary, #585858);
+  padding: 12px 16px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: clamp(12px, 1.5vw, 14px);
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  flex-grow: 1;
-  min-width: 80px;
+  transition: all 0.3s ease;
   text-align: center;
+  white-space: nowrap;
 }
 
 .exportRow button:hover {
   color: #ff4b9b;
+  border-color: #ff4b9b;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(255, 106, 149, 0.2);
+}
+
+.exportRow button:active {
+  transform: translateY(0);
 }
 
 .clearAllButton {
+  grid-column: 1 / -1;
   background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129)) !important;
   color: white !important;
-  border: none;
-  padding: 10px;
+  border: none !important;
+  padding: 12px 20px !important;
   border-radius: 15px !important;
   font-weight: bold;
-  font-size: 14px;
+  font-size: clamp(13px, 1.5vw, 14px) !important;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
   position: relative;
   overflow: hidden;
 }
 
 .clearAllButton:hover {
   background: linear-gradient(90deg, #ff6a95, rgb(255, 104, 129), #ff6a95) !important;
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
   box-shadow: 0 4px 12px rgba(255, 106, 149, 0.3) !important;
 }
 
-/* Efeito adicional de brilho no hover (opcional) */
 .clearAllButton::before {
   content: '';
   position: absolute;
@@ -73,4 +79,78 @@
 
 .clearAllButton:hover::before {
   left: 100%;
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+
+/* Tablets */
+@media screen and (max-width: 968px) {
+  .exportRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .exportContainer {
+    padding: 20px;
+  }
+}
+
+/* Mobile grande */
+@media screen and (max-width: 768px) {
+  .exportRow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .exportRow button {
+    padding: 10px 12px;
+  }
+
+  .clearAllButton {
+    margin-top: 8px;
+    padding: 10px 16px !important;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .exportContainer {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .exportRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .exportRow button {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .dividerLine {
+    margin-bottom: 16px;
+  }
+
+  .clearAllButton {
+    padding: 10px !important;
+  }
+}
+
+/* Mobile pequeno */
+@media screen and (max-width: 375px) {
+  .exportContainer {
+    padding: 12px;
+  }
+
+  .exportRow {
+    gap: 6px;
+  }
+
+  .exportRow button {
+    padding: 8px;
+    font-size: 11px;
+  }
 }
